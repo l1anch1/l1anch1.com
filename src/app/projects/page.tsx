@@ -6,14 +6,11 @@ import {
   Github, 
   ExternalLink, 
   Terminal, 
-  Code2, 
   Brain, 
-  Cpu, 
   Globe, 
   Search,
   Sparkles,
   FlaskConical,
-  Trophy,
   GitFork,
   Star,
 } from "lucide-react";
@@ -407,7 +404,6 @@ export default function ProjectsPage() {
                     project={project}
                     language={language}
                     delay={0.05 * index}
-                    t={t}
                   />
                 ))}
               </motion.div>
@@ -437,10 +433,9 @@ interface CompactProjectCardProps {
   project: Project;
   language: "en" | "zh";
   delay: number;
-  t: (key: string) => string;
 }
 
-function CompactProjectCard({ project, language, delay, t }: CompactProjectCardProps) {
+function CompactProjectCard({ project, language, delay }: CompactProjectCardProps) {
   const CategoryIcon = categoryIcons[project.category];
 
   return (

@@ -6,15 +6,11 @@ import {
   Briefcase,
   GraduationCap,
   Code2,
-  Braces,
-  Database,
   Brain,
-  Cpu,
   Globe,
   Server,
   Layers,
   GitBranch,
-  Workflow,
 } from "lucide-react";
 import GlassNavbar from "@/components/ui/GlassNavbar";
 import { useLanguage } from "@/contexts/LanguageContext";
