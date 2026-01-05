@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, Home, User, FolderOpen, Mail, Globe } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import Link from "next/link";
 
 interface GlassNavbarProps {
   showBackButton?: boolean;
@@ -11,7 +12,7 @@ interface GlassNavbarProps {
 
 export default function GlassNavbar({
   showBackButton = true,
-  backHref = "#",
+  backHref = "https://l1anch1.github.io",
 }: GlassNavbarProps) {
   const { language, toggleLanguage, t } = useLanguage();
 
@@ -63,17 +64,17 @@ export default function GlassNavbar({
           transition={{ delay: 0.4 }}
           className="hidden sm:block absolute left-1/2 -translate-x-1/2"
         >
-          <span className="text-white font-semibold tracking-tight text-sm">
-            {language === "zh" ? "李安驰" : "Li Anchi"}
-          </span>
+          <Link href="/" className="text-white font-semibold tracking-tight text-sm hover:text-white/80 transition-colors">
+            {language === "zh" ? "李桉弛" : "Li Anchi"}
+          </Link>
         </motion.div>
 
         {/* Right: Navigation items + Language toggle */}
         <div className="flex items-center gap-0.5 sm:gap-1">
-          <NavItem icon={<Home className="w-4 h-4" />} label={t("home")} />
-          <NavItem icon={<FolderOpen className="w-4 h-4" />} label={t("work")} />
-          <NavItem icon={<User className="w-4 h-4" />} label={t("about")} className="hidden sm:flex" />
-          <NavItem icon={<Mail className="w-4 h-4" />} label={t("contact")} className="hidden sm:flex" />
+          <NavItem icon={<Home className="w-4 h-4" />} label={t("home")} href="/" />
+          <NavItem icon={<FolderOpen className="w-4 h-4" />} label={t("work")} href="/projects" />
+          <NavItem icon={<User className="w-4 h-4" />} label={t("about")} href="/about" className="hidden sm:flex" />
+          <NavItem icon={<Mail className="w-4 h-4" />} label={t("contact")} href="/contact" className="hidden sm:flex" />
           
           {/* Language Toggle */}
           <motion.button
@@ -110,26 +111,28 @@ interface NavItemProps {
 
 function NavItem({ icon, label, active = false, href = "#", className = "" }: NavItemProps) {
   return (
-    <motion.a
-      href={href}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      className={`
-        flex items-center gap-1.5
-        px-2 sm:px-2.5 py-1.5
-        rounded-xl
-        text-xs sm:text-sm font-medium
-        transition-all duration-300
-        ${
-          active
-            ? "bg-white/20 text-white"
-            : "text-white/70 hover:text-white hover:bg-white/10"
-        }
-        ${className}
-      `}
-    >
-      {icon}
-      <span className="hidden lg:inline">{label}</span>
-    </motion.a>
+    <Link href={href}>
+      <motion.span
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className={`
+          flex items-center gap-1.5
+          px-2 sm:px-2.5 py-1.5
+          rounded-xl
+          text-xs sm:text-sm font-medium
+          transition-all duration-300
+          cursor-pointer
+          ${
+            active
+              ? "bg-white/20 text-white"
+              : "text-white/70 hover:text-white hover:bg-white/10"
+          }
+          ${className}
+        `}
+      >
+        {icon}
+        <span className="hidden lg:inline">{label}</span>
+      </motion.span>
+    </Link>
   );
 }
