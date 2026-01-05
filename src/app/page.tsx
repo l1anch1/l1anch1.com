@@ -7,7 +7,7 @@ import {
   Brain,
   Code2,
   Lightbulb,
-  GraduationCap,
+  Eye,
   Cpu,
   ExternalLink,
   Play,
@@ -29,18 +29,18 @@ const featuredProjects = [
     descKey: "squintaxDesc",
     gradient: "from-neon-purple to-neon-pink",
     icon: Code2,
-    tags: ["Next.js", "LangChain", "GPT-4"],
+    tags: ["Next.js", "TypeScript", "LangChain", "Computer Vision"],
     demoUrl: "#",
     githubUrl: "#",
     featured: true,
   },
   {
-    id: "tutorcraftease",
-    title: "TutorCraftEase",
-    descKey: "tutorCraftEaseDesc",
+    id: "ux-ray",
+    title: "UX-Ray",
+    descKey: "uxRayDesc",
     gradient: "from-neon-cyan to-neon-teal",
-    icon: GraduationCap,
-    tags: ["LLM", "Education", "HCI"],
+    icon: Eye,
+    tags: ["TypeScript", "Gemini API", "Prompt Engineering"],
     badge: "research",
     githubUrl: "#",
   },
@@ -50,7 +50,7 @@ const featuredProjects = [
     descKey: "raGeniusDesc",
     gradient: "from-neon-pink to-neon-rose",
     icon: Brain,
-    tags: ["RAG", "Vector DB", "NLP"],
+    tags: ["TypeScript", "RAG", "LangChain"],
     badge: "engineering",
     githubUrl: "#",
   },
@@ -83,9 +83,7 @@ export default function Home() {
 
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
             {t("heroTitle1")}{" "}
-            <span className="bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink bg-clip-text text-transparent">
-              {t("heroTitle2")}
-            </span>
+            
           </h1>
 
           <p className="text-lg sm:text-xl md:text-2xl text-white/60 font-light">

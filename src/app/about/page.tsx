@@ -11,6 +11,7 @@ import {
   Server,
   Layers,
   GitBranch,
+  Plane,
 } from "lucide-react";
 import GlassNavbar from "@/components/ui/GlassNavbar";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -26,7 +27,7 @@ interface Experience {
     en: string;
     zh: string;
   };
-  type: "research" | "work" | "education";
+  type: "research" | "work" | "education" | "intern";
   achievements: {
     en: string[];
     zh: string[];
@@ -35,74 +36,72 @@ interface Experience {
 
 const experiences: Experience[] = [
   {
+    period: "2025.07 - 2025.10",
+    role: {
+      en: "Mitacs Globalink Research Intern",
+      zh: "Mitacs Globalink 研究实习生",
+    },
+    organization: {
+      en: "REALISE Lab, University of Concordia, Canada",
+      zh: "REALISE 实验室，康考迪亚大学，加拿大",
+    },
+    type: "intern",
+    achievements: {
+      en: [
+        "Conducting AI4SE research on LLM-powered low-resource code generation",
+        "Collaborating with international research team",
+        "Funded by Mitacs Globalink Research Internship program",
+      ],
+      zh: [
+        "开展 LLM 辅助低资源代码生成的 AI4SE 研究",
+        "与国际研究团队合作",
+        "获 Mitacs Globalink 研究实习项目资助",
+      ],
+    },
+  },
+  {
     period: "2024.06 - Present",
     role: {
       en: "Research Assistant",
       zh: "研究助理",
     },
     organization: {
-      en: "HCI Lab, University",
-      zh: "人机交互实验室",
+      en: "HCI & IIP Lab, ISCAS, China",
+      zh: "人机交互与智能信息处理实验室，中国科学院软件研究所，中国",
     },
     type: "research",
     achievements: {
       en: [
-        "Leading research on LLM-powered educational interfaces",
-        "Published paper on adaptive tutoring systems at CHI",
-        "Developed RAG pipeline for knowledge retrieval",
+        "fine-tuned the Llama LLM and developed an agent application",
+        "leading research on LLM-based educational system, published papers at CHI'25 CHI'26",
+        "Developed dynamic knowledge graphs to identify knowledge gaps",
       ],
       zh: [
-        "主导大语言模型驱动的教育界面研究",
-        "在 CHI 发表自适应教学系统论文",
-        "开发知识检索的 RAG 管道",
-      ],
-    },
-  },
-  {
-    period: "2023.09 - 2024.05",
-    role: {
-      en: "Full-Stack Developer Intern",
-      zh: "全栈开发实习生",
-    },
-    organization: {
-      en: "Tech Startup",
-      zh: "科技初创公司",
-    },
-    type: "work",
-    achievements: {
-      en: [
-        "Architected microservices handling 100K+ daily requests",
-        "Implemented CI/CD pipeline reducing deployment time by 60%",
-        "Built real-time collaboration features with WebSocket",
-      ],
-      zh: [
-        "架构处理日均 10 万+ 请求的微服务系统",
-        "实施 CI/CD 管道，部署时间减少 60%",
-        "使用 WebSocket 构建实时协作功能",
+        "参与Llama大模型微调与智能体应用开发",
+        "主导大语言模型驱动的教育系统研究，发表 CHI'25 CHI'26 论文",
+        "开发动态知识图谱以归因知识薄弱环节",
       ],
     },
   },
   {
     period: "2022.09 - Present",
     role: {
-      en: "B.S. in Computer Science",
-      zh: "计算机科学学士",
+      en: "B.S. in Computer Science and Technology",
+      zh: "计算机科学与技术学士",
     },
     organization: {
-      en: "University",
-      zh: "大学",
+      en: "Beijing University of Technology",
+      zh: "北京工业大学",
     },
     type: "education",
     achievements: {
       en: [
-        "GPA: 3.9/4.0, Dean's List",
-        "Coursework: HCI, ML, Distributed Systems, Compilers",
-        "Teaching Assistant for Data Structures & Algorithms",
+        "GPA: 3.8/4.0, Academic Excellence Scholarship",
+        "Coursework: HCI, DL, Big Data, Compilers, Operating Systems, etc.",
       ],
       zh: [
-        "GPA: 3.9/4.0，院长名单",
-        "课程：人机交互、机器学习、分布式系统、编译原理",
-        "数据结构与算法课程助教",
+        "GPA: 3.8/4.0，优秀学生奖学金",
+        "课程：人机交互、深度学习、大数据、编译原理、操作系统等",
       ],
     },
   },
@@ -126,21 +125,21 @@ const skillCategories: SkillCategory[] = [
     key: "frontend",
     icon: <Globe className="w-5 h-5" />,
     color: "from-neon-cyan to-neon-teal",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js"],
+    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vite"],
   },
   {
     name: { en: "Backend / Systems", zh: "后端 / 系统" },
     key: "backend",
     icon: <Server className="w-5 h-5" />,
     color: "from-neon-purple to-neon-violet",
-    skills: ["Node.js", "Python", "FastAPI", "PostgreSQL", "Redis", "Docker"],
+    skills: ["Node.js", "Python", "C/C++", "FastAPI",  "Chroma DB", "Docker"],
   },
   {
     name: { en: "AI/ML & Data", zh: "AI/ML & 数据" },
     key: "aiml",
     icon: <Brain className="w-5 h-5" />,
     color: "from-neon-pink to-neon-rose",
-    skills: ["PyTorch", "LangChain", "OpenAI API", "Pinecone", "HuggingFace", "pandas"],
+    skills: ["PyTorch", "LangChain", "RAG", "HuggingFace", "Scikit-Learn", "pandas"],
   },
 ];
 
@@ -149,12 +148,21 @@ const typeIcons = {
   research: GraduationCap,
   work: Briefcase,
   education: Code2,
+  intern: Plane,
 };
 
 const typeColors = {
   research: "text-neon-cyan",
   work: "text-neon-purple",
   education: "text-neon-pink",
+  intern: "text-neon-emerald",
+};
+
+const dotColors = {
+  research: "from-neon-cyan to-neon-teal",
+  work: "from-neon-purple to-neon-violet",
+  education: "from-neon-pink to-neon-rose",
+  intern: "from-neon-emerald to-neon-teal",
 };
 
 export default function AboutPage() {
@@ -252,11 +260,7 @@ export default function AboutPage() {
 
                     {/* Dot on timeline */}
                     <div className="relative flex-shrink-0">
-                      <div className={`w-3 h-3 rounded-full bg-gradient-to-br ${
-                        exp.type === "research" ? "from-neon-cyan to-neon-teal" :
-                        exp.type === "work" ? "from-neon-purple to-neon-violet" :
-                        "from-neon-pink to-neon-rose"
-                      } ring-4 ring-dark-900`} />
+                      <div className={`w-3 h-3 rounded-full bg-gradient-to-br ${dotColors[exp.type]} ring-4 ring-dark-900`} />
                     </div>
 
                     {/* Content Card */}
@@ -361,22 +365,9 @@ export default function AboutPage() {
 function FloatingElements() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-[-1]">
-      <motion.div
-        animate={{ y: [0, -20, 0], rotate: [0, 8, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[20%] left-[5%] w-12 sm:w-16 h-12 sm:h-16 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 rotate-12"
-      />
-      <motion.div
-        animate={{ y: [0, 25, 0], rotate: [0, -12, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[30%] right-[8%] w-16 sm:w-20 h-16 sm:h-20 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 -rotate-6"
-      />
-      <motion.div
-        animate={{ y: [0, 15, 0], x: [0, -15, 0] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[25%] left-[3%] w-20 sm:w-24 h-20 sm:h-24 bg-white/5 backdrop-blur-xl rounded-[28px] border border-white/10 rotate-45"
-      />
+      <div className="absolute top-[20%] left-[5%] w-12 sm:w-16 h-12 sm:h-16 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 rotate-12" />
+      <div className="absolute top-[30%] right-[8%] w-16 sm:w-20 h-16 sm:h-20 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 -rotate-6" />
+      <div className="absolute bottom-[25%] left-[3%] w-20 sm:w-24 h-20 sm:h-24 bg-white/5 backdrop-blur-xl rounded-[28px] border border-white/10 rotate-45" />
     </div>
   );
 }
-

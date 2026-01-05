@@ -11,7 +11,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Li Anchi | Portfolio",
-  description: "HCI Researcher & AI Engineer - Portfolio with iOS VisionOS liquid glass aesthetic",
+  description: "LLM Researcher & AI Engineer - Portfolio with iOS VisionOS liquid glass aesthetic",
 };
 
 export default function RootLayout({

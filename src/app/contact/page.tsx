@@ -20,8 +20,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 const channels = [
   {
     name: "Email",
-    value: "lianchi@example.com",
-    href: "mailto:lianchi@example.com",
+    value: "l1anch1@outlook.com",
+    href: "mailto:l1anch1@outlook.com",
     icon: Mail,
     color: "from-neon-cyan to-neon-teal",
     copyable: true,
@@ -37,7 +37,7 @@ const channels = [
   {
     name: "LinkedIn",
     value: "Li Anchi",
-    href: "https://linkedin.com/in/lianchi",
+    href: "https://www.linkedin.com/in/anchi-li-b2992a373",
     icon: Linkedin,
     color: "from-neon-blue to-neon-indigo",
     copyable: false,

@@ -4,21 +4,21 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Github, 
-  ExternalLink, 
   Terminal, 
   Brain, 
   Globe, 
   Search,
   Sparkles,
   FlaskConical,
-  GitFork,
-  Star,
+  Eye,
+  Check,
+  GraduationCap,
 } from "lucide-react";
 import GlassNavbar from "@/components/ui/GlassNavbar";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 // Project categories
-type Category = "all" | "research" | "ai" | "fullstack" | "experiments";
+type Category = "all" | "research" | "ai" | "fullstack";
 
 // Project data type
 interface Project {
@@ -28,20 +28,21 @@ interface Project {
     en: string;
     zh: string;
   };
-  thumbnail: string;
+  thumbnail?: string; // Image path like "/projects/xxx.png"
+  gradient: string;   // Fallback gradient
   techStack: string[];
-  language: string; // Primary language
-  category: Exclude<Category, "all">;
+  language: string;
+  categories: Exclude<Category, "all">[]; // 支持多个分类
   githubUrl?: string;
+  academicUrl?: string; // 学术论文链接
   demoUrl?: string;
   featured?: boolean;
   stars?: number;
   forks?: number;
 }
 
-// Comprehensive project data
+// Project data - Only TypeScript projects + UX-Ray
 const allProjects: Project[] = [
-  // Featured Projects
   {
     id: "squintax",
     title: "Squintax",
@@ -49,15 +50,34 @@ const allProjects: Project[] = [
       en: "An intelligent code analysis tool that helps developers understand complex codebases through AI-powered visualization and natural language explanations.",
       zh: "一个智能代码分析工具，通过 AI 驱动的可视化和自然语言解释，帮助开发者理解复杂的代码库。",
     },
-    thumbnail: "from-neon-purple to-neon-pink",
+    thumbnail: "/projects/squintax.png",
+    gradient: "from-neon-purple to-neon-pink",
     techStack: ["Next.js", "TypeScript", "LangChain", "GPT-4", "D3.js"],
     language: "TypeScript",
-    category: "ai",
+    categories: ["ai", "fullstack"], // AI + 全栈
     githubUrl: "https://github.com",
     demoUrl: "https://demo.com",
     featured: true,
     stars: 128,
     forks: 24,
+  },
+  {
+    id: "ux-ray",
+    title: "UX-Ray",
+    description: {
+      en: "A web UI inspection tool that automatically identifies usability issues and provides actionable solutions using LLM vision analysis.",
+      zh: "一个网页 UI 审查工具，通过大模型视觉分析自动识别可用性问题并提供可操作的解决方案。",
+    },
+    thumbnail: "/projects/ux-ray.png",
+    gradient: "from-neon-cyan to-neon-teal",
+    techStack: ["Next.js", "TypeScript", "Gemini API", "Prompt Engineering"],
+    language: "TypeScript",
+    categories: ["ai", "fullstack"], // AI + 全栈
+    githubUrl: "https://github.com/l1anch1/ux-ray",
+    demoUrl: "https://ux-ray-ai.vercel.app",
+    featured: true,
+    stars: 86,
+    forks: 15,
   },
   {
     id: "tutorcraftease",
@@ -66,178 +86,68 @@ const allProjects: Project[] = [
       en: "An AI-powered tutoring system that adapts to individual learning styles, providing personalized educational experiences at scale.",
       zh: "一个 AI 驱动的教学系统，可以适应个人学习风格，大规模提供个性化的教育体验。",
     },
-    thumbnail: "from-neon-cyan to-neon-teal",
-    techStack: ["Python", "FastAPI", "LLM", "React", "PostgreSQL"],
-    language: "Python",
-    category: "research",
-    githubUrl: "https://github.com",
-    demoUrl: "https://demo.com",
+    thumbnail: "/projects/tutorcraftease.png",
+    gradient: "from-neon-indigo to-neon-violet",
+    techStack: ["React", "JavaScript", "OpenAI API"],
+    language: "JavaScript",
+    categories: ["research", "ai"], // 研究 + AI
+    //githubUrl: "https://github.com",
+    academicUrl: "https://doi.org/10.1145/3706598.3713731",
     featured: true,
-    stars: 86,
+    //stars: 92,
   },
   {
     id: "ragenius",
     title: "RAGenius",
     description: {
-      en: "Advanced Retrieval-Augmented Generation system for enterprise knowledge management with real-time context understanding.",
-      zh: "先进的检索增强生成系统，用于企业知识管理，具有实时上下文理解能力。",
+      en: "Advanced Retrieval-Augmented Generation system for personal or enterprise knowledge management with real-time context understanding and generation.",
+      zh: "先进的检索增强生成系统，用于个人或企业知识管理，具有实时上下文理解与生成能力。",
     },
-    thumbnail: "from-neon-pink to-neon-rose",
-    techStack: ["Python", "LangChain", "Pinecone", "Redis", "FastAPI"],
-    language: "Python",
-    category: "ai",
-    githubUrl: "https://github.com",
+    thumbnail: "/projects/ragenius.png",
+    gradient: "from-neon-pink to-neon-rose",
+    techStack: ["Next.js", "TypeScript", "LangChain", "Chroma DB", "FastAPI"],
+    language: "TypeScript",
+    categories: ["ai", "fullstack"], // AI + 全栈
+    githubUrl: "https://github.com/l1anch1/ragenius",
+    demoUrl: "https://ragenius.xyz",
     featured: true,
-    stars: 64,
-    forks: 12,
-  },
-  // Full-Stack Projects
-  {
-    id: "glassui",
-    title: "GlassUI Kit",
-    description: {
-      en: "A comprehensive glassmorphism component library for React, featuring iOS/VisionOS-inspired design system with Framer Motion animations.",
-      zh: "一个全面的玻璃拟态 React 组件库，采用 iOS/VisionOS 风格设计系统和 Framer Motion 动画。",
-    },
-    thumbnail: "from-neon-indigo to-neon-violet",
-    techStack: ["React", "TypeScript", "Tailwind", "Framer Motion"],
-    language: "TypeScript",
-    category: "fullstack",
-    githubUrl: "https://github.com",
-    demoUrl: "https://demo.com",
-    stars: 256,
-    forks: 48,
+    //stars: 64,
+    //forks: 12,
   },
   {
-    id: "devboard",
-    title: "DevBoard",
+    id: "repohealth",
+    title: "RepoHealth",
     description: {
-      en: "A real-time collaborative dashboard for development teams. Features kanban boards, sprint planning, and GitHub integration.",
-      zh: "面向开发团队的实时协作仪表板，具有看板、冲刺规划和 GitHub 集成功能。",
+      en: "A data-driven GitHub ecosystem analysis system that leverages machine learning and deep learning to analyze repository health metrics and predict lifespan.",
+      zh: "基于数据驱动的GitHub生态系统分析系统，通过机器学习和深度学习技术分析约9.6万条仓库的健康度指标并预测项目寿命，为开源项目可持续性和生态系统动态提供数据洞察。",
     },
-    thumbnail: "from-neon-emerald to-neon-teal",
-    techStack: ["Next.js", "Prisma", "PostgreSQL", "WebSocket", "Docker"],
-    language: "TypeScript",
-    category: "fullstack",
-    githubUrl: "https://github.com",
-    demoUrl: "https://demo.com",
-    stars: 42,
-  },
-  // Research Projects
-  {
-    id: "hci-gestures",
-    title: "GestureFlow",
-    description: {
-      en: "Research prototype for gesture-based UI navigation. Uses MediaPipe for hand tracking and custom ML models for gesture recognition.",
-      zh: "基于手势的 UI 导航研究原型。使用 MediaPipe 进行手部追踪和自定义 ML 模型进行手势识别。",
-    },
-    thumbnail: "from-neon-orange to-neon-amber",
-    techStack: ["Python", "MediaPipe", "TensorFlow", "React"],
+    thumbnail: "/projects/repohealth.png",
+    gradient: "from-neon-emerald to-neon-teal",
+    techStack: ["Juyter", "transformers", "PyTorch", "scikit-learn", "seaborn"],
     language: "Python",
-    category: "research",
-    githubUrl: "https://github.com",
+    categories: ["ai", "research"], // AI + 研究
+    githubUrl: "https://github.com/l1anch1/Repo-Health",
+    featured: true,
+    //stars: 64,
+    //forks: 12,
   },
   {
-    id: "llm-eval",
-    title: "LLM-Eval Framework",
+    id: "asl-recognition",
+    title: "ASL-Recognition",
     description: {
-      en: "A comprehensive evaluation framework for comparing LLM performance across multiple dimensions: accuracy, latency, and cost efficiency.",
-      zh: "一个全面的 LLM 评估框架，用于比较多个维度的性能：准确性、延迟和成本效益。",
+      en: "A multi-dimensional comparative evaluation framework for American Sign Language (ASL) alphabet recognition, benchmarking CNN, Liquid NN, and ViT architectures across accuracy, noise robustness, and feature representation interpretability.",
+      zh: "一个多维度的比较评估框架，用于美国手语（ASL）字母识别，在准确率、噪声鲁棒性和特征表示可解释性方面对比CNN、Liquid NN和ViT架构。",
     },
-    thumbnail: "from-neon-blue to-neon-indigo",
-    techStack: ["Python", "PyTorch", "Weights & Biases", "Docker"],
+    thumbnail: "/projects/asl-recognition.png",
+    gradient: "from-neon-orange to-neon-amber",
+    techStack: [ "PyTorch", "OpenCV", "TorchDyn", "scikit-learn", "seaborn"],
     language: "Python",
-    category: "research",
-    githubUrl: "https://github.com",
-    stars: 156,
-    forks: 32,
+    categories: ["ai", "research"], // AI + 研究
+    githubUrl: "https://github.com/l1anch1/ASL-Recognition",
+    featured: true,
+    //stars: 64,
+    //forks: 12,
   },
-  // AI/LLM Projects
-  {
-    id: "chatbot-factory",
-    title: "Chatbot Factory",
-    description: {
-      en: "No-code platform for creating custom chatbots. Supports multiple LLM backends and integrates with popular messaging platforms.",
-      zh: "创建自定义聊天机器人的无代码平台。支持多种 LLM 后端，并与流行的消息平台集成。",
-    },
-    thumbnail: "from-neon-fuchsia to-neon-purple",
-    techStack: ["Next.js", "OpenAI", "Anthropic", "Supabase"],
-    language: "TypeScript",
-    category: "ai",
-    githubUrl: "https://github.com",
-    demoUrl: "https://demo.com",
-    stars: 89,
-  },
-  {
-    id: "code-review-ai",
-    title: "CodeReview AI",
-    description: {
-      en: "GitHub Action that automatically reviews PRs using GPT-4. Provides actionable feedback on code quality, security, and best practices.",
-      zh: "使用 GPT-4 自动审查 PR 的 GitHub Action。提供关于代码质量、安全性和最佳实践的可操作反馈。",
-    },
-    thumbnail: "from-neon-lime to-neon-emerald",
-    techStack: ["TypeScript", "GitHub Actions", "GPT-4", "Node.js"],
-    language: "TypeScript",
-    category: "ai",
-    githubUrl: "https://github.com",
-    stars: 324,
-    forks: 67,
-  },
-  // Experiments / Hackathon
-  {
-    id: "hackathon-voiceai",
-    title: "VoiceCanvas",
-    description: {
-      en: "🏆 HackMIT 2024 Winner - Voice-controlled digital canvas using Whisper + Stable Diffusion. Real-time voice-to-art generation.",
-      zh: "🏆 HackMIT 2024 获奖作品 - 使用 Whisper + Stable Diffusion 的语音控制数字画布。实时语音转艺术生成。",
-    },
-    thumbnail: "from-neon-gold to-neon-orange",
-    techStack: ["Python", "Whisper", "Stable Diffusion", "FastAPI"],
-    language: "Python",
-    category: "experiments",
-    githubUrl: "https://github.com",
-    demoUrl: "https://demo.com",
-  },
-  {
-    id: "terminal-portfolio",
-    title: "Terminal Portfolio",
-    description: {
-      en: "Interactive terminal-style portfolio website. Supports custom commands, themes, and ASCII art. Built as a fun weekend project.",
-      zh: "交互式终端风格的作品集网站。支持自定义命令、主题和 ASCII 艺术。作为周末趣味项目构建。",
-    },
-    thumbnail: "from-neon-gray to-neon-slate",
-    techStack: ["React", "TypeScript", "xterm.js"],
-    language: "TypeScript",
-    category: "experiments",
-    githubUrl: "https://github.com",
-    demoUrl: "https://demo.com",
-    stars: 178,
-    forks: 41,
-  },
-  {
-    id: "pixel-art-gen",
-    title: "PixelForge",
-    description: {
-      en: "AI-powered pixel art generator. Converts photos or prompts into retro-style pixel art with customizable palettes.",
-      zh: "AI 驱动的像素艺术生成器。将照片或提示转换为复古风格的像素艺术，支持自定义调色板。",
-    },
-    thumbnail: "from-neon-red to-neon-pink",
-    techStack: ["Python", "PyTorch", "Gradio", "PIL"],
-    language: "Python",
-    category: "experiments",
-    githubUrl: "https://github.com",
-    demoUrl: "https://demo.com",
-    stars: 92,
-  },
-];
-
-// Category config
-const categories: { key: Category; icon: React.ElementType; gradient: string }[] = [
-  { key: "all", icon: Sparkles, gradient: "from-white/20 to-white/10" },
-  { key: "ai", icon: Brain, gradient: "from-neon-purple to-neon-pink" },
-  { key: "research", icon: FlaskConical, gradient: "from-neon-cyan to-neon-teal" },
-  { key: "fullstack", icon: Globe, gradient: "from-neon-indigo to-neon-violet" },
-  { key: "experiments", icon: FlaskConical, gradient: "from-neon-orange to-neon-amber" },
 ];
 
 // Filter key mapping for translations
@@ -246,30 +156,65 @@ const filterKeyMap: Record<Category, string> = {
   ai: "filterAI",
   research: "filterResearch",
   fullstack: "filterFullStack",
-  experiments: "filterExperiments",
 };
+
+// Category config
+const categories: { key: Category; icon: React.ElementType; gradient: string }[] = [
+  { key: "all", icon: Sparkles, gradient: "from-white/20 to-white/10" },
+  { key: "ai", icon: Brain, gradient: "from-neon-purple to-neon-pink" },
+  { key: "research", icon: FlaskConical, gradient: "from-neon-cyan to-neon-teal" },
+  { key: "fullstack", icon: Globe, gradient: "from-neon-indigo to-neon-violet" },
+];
 
 // Category icons for cards
 const categoryIcons: Record<Exclude<Category, "all">, React.ElementType> = {
-  research: FlaskConical,
+  research: Eye,
   ai: Brain,
   fullstack: Globe,
-  experiments: FlaskConical,
 };
+
+// Categories that can be selected (excluding "all")
+type SelectableCategory = Exclude<Category, "all">;
 
 export default function ProjectsPage() {
   const { language, t } = useLanguage();
-  const [activeCategory, setActiveCategory] = useState<Category>("all");
+  const [selectedCategories, setSelectedCategories] = useState<Set<SelectableCategory>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Toggle category selection
+  const toggleCategory = (category: Category) => {
+    if (category === "all") {
+      // "All" clears all selections (shows everything)
+      setSelectedCategories(new Set());
+    } else {
+      setSelectedCategories((prev) => {
+        const newSet = new Set(prev);
+        if (newSet.has(category)) {
+          newSet.delete(category);
+        } else {
+          newSet.add(category);
+        }
+        return newSet;
+      });
+    }
+  };
+
+  // Check if a category is active
+  const isCategoryActive = (category: Category) => {
+    if (category === "all") {
+      return selectedCategories.size === 0;
+    }
+    return selectedCategories.has(category);
+  };
 
   // Filter projects
   const filteredProjects = useMemo(() => {
     return allProjects.filter((project) => {
-      // Category filter
-      if (activeCategory !== "all" && project.category !== activeCategory) {
-        return false;
+      // If categories selected, check if project has any matching category
+      if (selectedCategories.size > 0) {
+        const hasMatchingCategory = project.categories.some(cat => selectedCategories.has(cat));
+        if (!hasMatchingCategory) return false;
       }
-      // Search filter
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
         return (
@@ -280,7 +225,7 @@ export default function ProjectsPage() {
       }
       return true;
     });
-  }, [activeCategory, searchQuery]);
+  }, [selectedCategories, searchQuery]);
 
   return (
     <>
@@ -323,15 +268,16 @@ export default function ProjectsPage() {
           className="w-full max-w-6xl mb-8"
         >
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-            {/* Category Filters */}
+            {/* Category Filters - Multi-select */}
             <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
               {categories.map((cat) => {
                 const Icon = cat.icon;
-                const isActive = activeCategory === cat.key;
+                const isActive = isCategoryActive(cat.key);
+                const showCheck = cat.key !== "all" && isActive;
                 return (
                   <motion.button
                     key={cat.key}
-                    onClick={() => setActiveCategory(cat.key)}
+                    onClick={() => toggleCategory(cat.key)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className={`
@@ -346,7 +292,11 @@ export default function ProjectsPage() {
                       }
                     `}
                   >
-                    <Icon className="w-4 h-4" />
+                    {showCheck ? (
+                      <Check className="w-4 h-4" />
+                    ) : (
+                      <Icon className="w-4 h-4" />
+                    )}
                     <span>{t(filterKeyMap[cat.key])}</span>
                   </motion.button>
                 );
@@ -386,24 +336,24 @@ export default function ProjectsPage() {
           </motion.div>
         </motion.div>
 
-        {/* Projects Grid - Dense Layout */}
-        <div className="w-full max-w-6xl">
+        {/* Projects Grid */}
+        <div className="w-full max-w-7xl">
           <AnimatePresence mode="wait">
             {filteredProjects.length > 0 ? (
               <motion.div
-                key={`${activeCategory}-${searchQuery}`}
+                key={`${Array.from(selectedCategories).join("-")}-${searchQuery}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
               >
                 {filteredProjects.map((project, index) => (
                   <CompactProjectCard
                     key={project.id}
                     project={project}
                     language={language}
-                    delay={0.05 * index}
+                    delay={0.1 * index}
                   />
                 ))}
               </motion.div>
@@ -436,20 +386,17 @@ interface CompactProjectCardProps {
 }
 
 function CompactProjectCard({ project, language, delay }: CompactProjectCardProps) {
-  const CategoryIcon = categoryIcons[project.category];
+  // 使用第一个分类的图标
+  const CategoryIcon = categoryIcons[project.categories[0]];
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.4,
         delay,
-        ease: [0.21, 0.47, 0.32, 0.98],
-      }}
-      whileHover={{
-        scale: 1.02,
-        transition: { duration: 0.2 },
+        ease: "easeOut",
       }}
       className="group relative"
     >
@@ -458,100 +405,113 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
           h-full
           bg-white/5 backdrop-blur-xl
           border border-white/10
-          rounded-xl
+          rounded-2xl
           overflow-hidden
           transition-all duration-300
           hover:bg-white/10
           hover:border-white/20
-          hover:shadow-lg hover:shadow-neon-purple/5
+          hover:shadow-lg hover:shadow-neon-purple/10
         "
       >
-        {/* Compact Thumbnail */}
-        <div className={`relative h-24 bg-gradient-to-br ${project.thumbnail} overflow-hidden`}>
-          {/* Language Badge */}
-          <div className="absolute top-2 left-2">
-            <span className="px-2 py-0.5 bg-black/40 backdrop-blur-md rounded text-white text-[10px] font-mono font-medium">
-              {project.language}
-            </span>
-          </div>
-
-          {/* Featured / Stats */}
-          <div className="absolute top-2 right-2 flex items-center gap-1">
-            {project.featured && (
-              <span className="px-1.5 py-0.5 bg-neon-cyan/30 backdrop-blur-md rounded text-neon-cyan text-[10px] font-medium">
-                ★
-              </span>
-            )}
-          </div>
+        {/* Thumbnail */}
+        <div className={`relative h-44 sm:h-48 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
+          {/* Image thumbnail (if available) */}
+          {project.thumbnail && (
+            <img
+              src={project.thumbnail}
+              alt={project.title}
+              className="absolute inset-0 w-full h-full object-cover"
+              onError={(e) => {
+                // Hide image on error, showing gradient fallback
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
+          )}
 
           {/* Category icon */}
-          <div className="absolute bottom-2 right-2">
-            <div className="w-6 h-6 rounded-lg bg-black/30 backdrop-blur-md flex items-center justify-center">
-              <CategoryIcon className="w-3 h-3 text-white/70" />
+          <div className="absolute bottom-3 right-3 z-10">
+            <div className="w-8 h-8 rounded-xl bg-black/30 backdrop-blur-md flex items-center justify-center">
+              <CategoryIcon className="w-4 h-4 text-white/70" />
             </div>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-3">
-          {/* Title */}
-          <h3 className="text-sm font-bold text-white mb-1 group-hover:text-neon-cyan transition-colors truncate">
-            {project.title}
-          </h3>
+        <div className="p-5">
+          {/* Title & Language */}
+          <div className="flex items-center gap-2 mb-2">
+            <h3 className="text-lg font-bold text-white group-hover:text-neon-cyan transition-colors">
+              {project.title}
+            </h3>
+            <span className="px-2 py-0.5 bg-white/10 rounded text-[10px] font-mono text-white/60">
+              {project.language}
+            </span>
+          </div>
 
           {/* Description */}
-          <p className="text-white/50 text-xs leading-relaxed mb-2 line-clamp-2">
+          <p className="text-white/60 text-sm leading-relaxed mb-4 line-clamp-2">
             {project.description[language]}
           </p>
 
-          {/* Tech Stack - Compact terminal style */}
-          <div className="flex flex-wrap gap-1 mb-2">
-            {project.techStack.slice(0, 3).map((tech) => (
-              <span
-                key={tech}
-                className="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono text-neon-cyan/70"
-              >
-                {tech}
-              </span>
-            ))}
-            {project.techStack.length > 3 && (
-              <span className="px-1.5 py-0.5 text-[10px] font-mono text-white/40">
-                +{project.techStack.length - 3}
-              </span>
-            )}
-          </div>
-
-          {/* Stats & Links Row */}
-          <div className="flex items-center justify-between pt-2 border-t border-white/5">
-            {/* Stats */}
-            <div className="flex items-center gap-2">
-              {project.stars && (
-                <span className="flex items-center gap-0.5 text-white/40 text-[10px]">
-                  <Star className="w-3 h-3" />
-                  {project.stars}
+          {/* Tech Stack & Links */}
+          <div className="flex items-center justify-between pt-3 border-t border-white/10">
+            {/* Tech Stack */}
+            <div className="flex flex-wrap gap-1 flex-1 mr-2">
+              {project.techStack.slice(0, 3).map((tech) => (
+                <span
+                  key={tech}
+                  className="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono text-neon-cyan/80"
+                >
+                  {tech}
                 </span>
-              )}
-              {project.forks && (
-                <span className="flex items-center gap-0.5 text-white/40 text-[10px]">
-                  <GitFork className="w-3 h-3" />
-                  {project.forks}
+              ))}
+              {project.techStack.length > 3 && (
+                <span className="px-1.5 py-0.5 text-[10px] font-mono text-white/40">
+                  +{project.techStack.length - 3}
                 </span>
               )}
             </div>
 
             {/* Links */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2 flex-shrink-0">
               {project.githubUrl && (
                 <motion.a
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-white/50 hover:text-white transition-all"
-                  onClick={(e) => e.stopPropagation()}
+                  className="
+                    p-2 rounded-xl
+                    bg-white/10 border border-white/20
+                    text-white/80 hover:text-white
+                    hover:bg-white/20 hover:border-white/30
+                    shadow-sm hover:shadow-md hover:shadow-white/5
+                    transition-all duration-200
+                  "
+                  title="Source Code"
                 >
-                  <Github className="w-3 h-3" />
+                  <Github className="w-4 h-4" />
+                </motion.a>
+              )}
+              {project.academicUrl && (
+                <motion.a
+                  href={project.academicUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="
+                    p-2 rounded-xl
+                    bg-white/10 border border-white/20
+                    text-white/80 hover:text-white
+                    hover:bg-white/20 hover:border-white/30
+                    shadow-sm hover:shadow-md hover:shadow-white/5
+                    transition-all duration-200
+                  "
+                  title="Academic Paper"
+                >
+                  <GraduationCap className="w-4 h-4" />
                 </motion.a>
               )}
               {project.demoUrl && (
@@ -559,12 +519,24 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
                   href={project.demoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-white/50 hover:text-white transition-all"
-                  onClick={(e) => e.stopPropagation()}
+                  className="
+                    relative overflow-hidden
+                    flex items-center gap-1.5
+                    px-3 py-1.5 rounded-xl
+                    bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink
+                    text-white text-xs font-semibold
+                    shadow-lg shadow-neon-purple/30
+                    hover:shadow-xl hover:shadow-neon-cyan/40
+                    transition-all duration-300
+                    before:absolute before:inset-0
+                    before:bg-gradient-to-r before:from-white/20 before:to-transparent
+                    before:opacity-0 before:hover:opacity-100
+                    before:transition-opacity
+                  "
                 >
-                  <ExternalLink className="w-3 h-3" />
+                  <span>Try it Now</span>
                 </motion.a>
               )}
             </div>
@@ -578,21 +550,9 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
 function FloatingElements() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-[-1]">
-      <motion.div
-        animate={{ y: [0, -20, 0], rotate: [0, 8, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[20%] left-[5%] w-12 sm:w-16 h-12 sm:h-16 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 rotate-12"
-      />
-      <motion.div
-        animate={{ y: [0, 25, 0], rotate: [0, -12, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[30%] right-[8%] w-16 sm:w-20 h-16 sm:h-20 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 -rotate-6"
-      />
-      <motion.div
-        animate={{ y: [0, 15, 0], x: [0, -15, 0] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[25%] left-[3%] w-20 sm:w-24 h-20 sm:h-24 bg-white/5 backdrop-blur-xl rounded-[28px] border border-white/10 rotate-45"
-      />
+      <div className="absolute top-[20%] left-[5%] w-12 sm:w-16 h-12 sm:h-16 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 rotate-12" />
+      <div className="absolute top-[30%] right-[8%] w-16 sm:w-20 h-16 sm:h-20 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 -rotate-6" />
+      <div className="absolute bottom-[25%] left-[3%] w-20 sm:w-24 h-20 sm:h-24 bg-white/5 backdrop-blur-xl rounded-[28px] border border-white/10 rotate-45" />
     </div>
   );
 }
