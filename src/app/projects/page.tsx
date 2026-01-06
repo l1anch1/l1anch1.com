@@ -42,24 +42,24 @@ interface Project {
 
 // Project data - Only TypeScript projects + UX-Ray
 const allProjects: Project[] = [
-  {
-    id: "squintax",
-    title: "Squintax",
-    description: {
-      en: "An intelligent code analysis tool that helps developers understand complex codebases through AI-powered visualization and natural language explanations.",
-      zh: "一个智能代码分析工具，通过 AI 驱动的可视化和自然语言解释，帮助开发者理解复杂的代码库。",
-    },
-    thumbnail: "/projects/squintax.png",
-    gradient: "from-neon-purple to-neon-pink",
-    techStack: ["Next.js", "TypeScript", "LangChain", "GPT-4", "D3.js"],
-    language: "TypeScript",
-    categories: ["ai", "fullstack"], // AI + 全栈
-    githubUrl: "https://github.com",
-    demoUrl: "https://demo.com",
-    featured: true,
-    stars: 128,
-    forks: 24,
-  },
+  // {
+  //   id: "squintax",
+  //   title: "Squintax",
+  //   description: {
+  //     en: "An intelligent code analysis tool that helps developers understand complex codebases through AI-powered visualization and natural language explanations.",
+  //     zh: "一个智能代码分析工具，通过 AI 驱动的可视化和自然语言解释，帮助开发者理解复杂的代码库。",
+  //   },
+  //   thumbnail: "/projects/squintax.png",
+  //   gradient: "from-neon-purple to-neon-pink",
+  //   techStack: ["Next.js", "TypeScript", "LangChain", "GPT-4", "D3.js"],
+  //   language: "TypeScript",
+  //   categories: ["ai", "fullstack"], // AI + 全栈
+  //   githubUrl: "https://github.com",
+  //   demoUrl: "https://demo.com",
+  //   featured: true,
+  //   stars: 128,
+  //   forks: 24,
+  // },
   {
     id: "ux-ray",
     title: "UX-Ray",
