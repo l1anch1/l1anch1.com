@@ -25,9 +25,9 @@ export default function GlassNavbar({
     >
       <div
         className="
-          mx-auto max-w-5xl
+          mx-auto max-w-6xl
           flex items-center justify-between
-          px-3 sm:px-4 py-2.5
+          px-4 sm:px-6 py-3
           bg-white/10 backdrop-blur-2xl
           border border-white/20
           rounded-2xl

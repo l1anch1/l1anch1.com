@@ -1,4 +1,4 @@
-# �glass Li Anchi Portfolio
+# Li Anchi Portfolio
 
 A stunning portfolio website with **iOS / VisionOS Liquid Glass** aesthetic, featuring glassmorphism effects, animated mesh gradient backgrounds, and bilingual support.
 

@@ -21,9 +21,9 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Hero
     portfolio: "Portfolio 2026",
-    heroTitle1: "Code. Research. Ship.",
+    heroTitle1: "Bridging AI Research & Engineering",
     heroSubtitle: "Li Anchi.",
-    heroRole: "LLM Researcher & AI Engineer.",
+    heroRole: "Researcher. Builder. Innovator.",
     
     // Featured Works (Homepage)
     featuredWorks: "Selected Highlights",
@@ -34,15 +34,15 @@ const translations: Record<Language, Record<string, string>> = {
     engineering: "Engineering",
     tutorCraftEaseDesc: "An AI-powered tutoring system that adapts to individual learning styles, providing personalized educational experiences at scale.",
     raGeniusDesc: "Advanced Retrieval-Augmented Generation system for enterprise knowledge management with real-time context understanding.",
+    repoHealthDesc: "A data-driven GitHub ecosystem analysis system using ML/DL to analyze repository health metrics and predict project lifespan.",
     exploreAllProjects: "Explore All Projects →",
     viewArchive: "View Complete Archive",
     
     // Skills
     researchInterests: "Research Interests",
-    humanAI: "Human-AI Interaction",
-    creativeCoding: "Creative Coding",
+    humanAI: "Human-Centered AI",
     llmApps: "LLM Applications",
-    generativeUI: "Generative UI",
+    aiSE: "AI for Software Engineering",
     
     // Contact Home
     letsConnect: "Let's Connect",
@@ -70,7 +70,7 @@ const translations: Record<Language, Record<string, string>> = {
     aboutTitle: "> whoami",
     aboutSubtitle: "CS Senior • LLM Researcher • Full-Stack Developer",
     aboutBio1: "I'm a Computer Science senior with a passion for bridging the gap between academic research and real-world software engineering. My journey began with a fascination for how humans interact with technology, leading me to pursue research in Human-Computer Interaction while simultaneously building production-ready applications.",
-    aboutBio2: "Currently, I serve as a Research Assistant exploring the intersection of Large Language Models and educational technology. Beyond research, I'm passionate about building full-stack systems that solve real problems—from AI-powered code analysis tools to scalable knowledge management platforms. I believe the best innovations come from deeply understanding both the theory and the craft.",
+    aboutBio2: "Currently, I serve as a Research Assistant exploring the intersection of Large Language Models and Human-Computer Interaction. Beyond the lab, I am a passionate full-stack builder, engineering solutions ranging from RAG-based knowledge platforms to AI-powered code analysis tools. I believe the best innovations come from deeply understanding both the theory and the craft.",
     experienceLog: "Experience.log",
     techArsenal: "Tech Arsenal",
     frontend: "Frontend",
@@ -100,9 +100,9 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Hero
     portfolio: "作品集 2026",
-    heroTitle1: "编码、科研、交付",
+    heroTitle1: "致力于弥合学术研究与工程落地的鸿沟",
     heroSubtitle: "李桉弛",
-    heroRole: "LLM研究员 & AI工程师",
+    heroRole: "研究者·构建者·创新者",
     
     // Featured Works (Homepage)
     featuredWorks: "精选作品",
@@ -113,15 +113,15 @@ const translations: Record<Language, Record<string, string>> = {
     engineering: "工程",
     tutorCraftEaseDesc: "一个 AI 驱动的教学系统，可以适应个人学习风格，大规模提供个性化的教育体验。",
     raGeniusDesc: "先进的检索增强生成系统，用于企业知识管理，具有实时上下文理解能力。",
+    repoHealthDesc: "基于数据驱动的 GitHub 生态系统分析系统，通过机器学习和深度学习分析仓库健康度指标并预测项目寿命。",
     exploreAllProjects: "查看全部项目 →",
     viewArchive: "浏览完整档案",
     
     // Skills
     researchInterests: "研究方向",
-    humanAI: "人机交互",
-    creativeCoding: "创意编程",
+    humanAI: "以人为本的人工智能",
     llmApps: "大模型应用",
-    generativeUI: "生成式界面",
+    aiSE: "智能化软件工程",
     
     // Contact Home
     letsConnect: "联系我",
@@ -149,7 +149,7 @@ const translations: Record<Language, Record<string, string>> = {
     aboutTitle: "> whoami",
     aboutSubtitle: "计算机大四 • 人机交互研究员 • 全栈开发者",
     aboutBio1: "我是一名计算机科学大四学生，热衷于连接学术研究与实际软件工程之间的桥梁。我的旅程始于对人机交互的着迷，这引导我在追求人机交互研究的同时，构建生产级应用程序。",
-    aboutBio2: "目前，我作为研究助理探索大语言模型与教育技术的交叉领域。在研究之外，我热衷于构建解决实际问题的全栈系统——从 AI 驱动的代码分析工具到可扩展的知识管理平台。我相信最好的创新来自对理论和实践的深刻理解。",
+    aboutBio2: "目前，我作为研究助理探索大语言模型与人机交互的交叉领域。在研究之外，我热衷于构建解决实际问题的全栈系统——从 RAG 驱动的知识平台到 AI 驱动的代码分析工具与教育系统。我相信最好的创新来自对理论和实践的深刻理解。",
     experienceLog: "经历日志",
     techArsenal: "技术栈",
     frontend: "前端",

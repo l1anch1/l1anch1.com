@@ -10,7 +10,6 @@ import {
   Search,
   Sparkles,
   FlaskConical,
-  Eye,
   Check,
   GraduationCap,
 } from "lucide-react";
@@ -168,7 +167,7 @@ const categories: { key: Category; icon: React.ElementType; gradient: string }[]
 
 // Category icons for cards
 const categoryIcons: Record<Exclude<Category, "all">, React.ElementType> = {
-  research: Eye,
+  research: FlaskConical,
   ai: Brain,
   fullstack: Globe,
 };
@@ -413,8 +412,8 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
           hover:shadow-lg hover:shadow-neon-purple/10
         "
       >
-        {/* Thumbnail */}
-        <div className={`relative h-44 sm:h-48 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
+        {/* Thumbnail - 6:4 ratio with content */}
+        <div className={`relative h-52 sm:h-56 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
           {/* Image thumbnail (if available) */}
           {project.thumbnail && (
             <img
@@ -454,10 +453,10 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
           </p>
 
           {/* Tech Stack & Links */}
-          <div className="flex items-center justify-between pt-3 border-t border-white/10">
+          <div className="flex items-start justify-between pt-3 border-t border-white/10 gap-3">
             {/* Tech Stack */}
-            <div className="flex flex-wrap gap-1 flex-1 mr-2">
-              {project.techStack.slice(0, 3).map((tech) => (
+            <div className="flex flex-wrap gap-1 flex-1">
+              {project.techStack.map((tech) => (
                 <span
                   key={tech}
                   className="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono text-neon-cyan/80"
@@ -465,11 +464,6 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
                   {tech}
                 </span>
               ))}
-              {project.techStack.length > 3 && (
-                <span className="px-1.5 py-0.5 text-[10px] font-mono text-white/40">
-                  +{project.techStack.length - 3}
-                </span>
-              )}
             </div>
 
             {/* Links */}

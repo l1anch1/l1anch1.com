@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import {
   Terminal,
   Mail,
@@ -12,9 +13,15 @@ import {
   Check,
   ExternalLink,
   Zap,
+  AlertCircle,
 } from "lucide-react";
 import GlassNavbar from "@/components/ui/GlassNavbar";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+// EmailJS configuration
+const EMAILJS_SERVICE_ID = "service_8r0861c";
+const EMAILJS_TEMPLATE_ID = "template_9ey05va";
+const EMAILJS_PUBLIC_KEY = "RgwDMSMAyDhc6zUfC";
 
 // Contact channels
 const channels = [
@@ -54,9 +61,10 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const copyEmail = async () => {
-    await navigator.clipboard.writeText("lianchi@example.com");
+    await navigator.clipboard.writeText("l1anch1@outlook.com");
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2000);
   };
@@ -64,12 +72,31 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setSubmitted(true);
-    setFormData({ name: "", email: "", message: "" });
-    setTimeout(() => setSubmitted(false), 3000);
+    setError(null);
+
+    try {
+      // Send email using EmailJS
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setIsSubmitting(false);
+      setSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (err) {
+      console.error("EmailJS Error:", err);
+      setIsSubmitting(false);
+      setError("Failed to send message. Please try again or use email directly.");
+      setTimeout(() => setError(null), 5000);
+    }
   };
 
   return (
@@ -221,6 +248,18 @@ export default function ContactPage() {
                   placeholder="> compose message..."
                 />
               </div>
+
+              {/* Error Message */}
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 px-4 py-3 bg-red-500/20 border border-red-500/30 rounded-xl text-red-400 text-sm"
+                >
+                  <AlertCircle className="w-4 h-4" />
+                  <span>{error}</span>
+                </motion.div>
+              )}
 
               {/* Submit Button */}
               <motion.button
