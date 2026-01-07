@@ -12,6 +12,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Li Anchi | Portfolio",
   description: "LLM Researcher & AI Engineer - Portfolio with iOS VisionOS liquid glass aesthetic",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/favicon.ico",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
