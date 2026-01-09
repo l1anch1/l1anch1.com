@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Github, 
@@ -15,6 +15,13 @@ import {
 } from "lucide-react";
 import GlassNavbar from "@/components/ui/GlassNavbar";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+// Image loading state hook
+function useImageLoaded() {
+  const [loaded, setLoaded] = useState(false);
+  const onLoad = useCallback(() => setLoaded(true), []);
+  return { loaded, onLoad };
+}
 
 // Project categories
 type Category = "all" | "research" | "ai" | "fullstack";
@@ -67,7 +74,7 @@ const allProjects: Project[] = [
       en: "A web UI inspection tool that automatically identifies usability issues and provides actionable solutions using LLM vision analysis.",
       zh: "一个网页 UI 审查工具，通过大模型视觉分析自动识别可用性问题并提供可操作的解决方案。",
     },
-    thumbnail: "/projects/ux-ray.png",
+    thumbnail: "/projects/ux-ray.webp",
     gradient: "from-neon-cyan to-neon-teal",
     techStack: ["Next.js", "TypeScript", "Gemini API", "Prompt Engineering"],
     language: "TypeScript",
@@ -85,7 +92,7 @@ const allProjects: Project[] = [
       en: "An AI-powered tutoring system that adapts to individual learning styles, providing personalized educational experiences at scale.",
       zh: "一个 AI 驱动的教学系统，可以适应个人学习风格，大规模提供个性化的教育体验。",
     },
-    thumbnail: "/projects/tutorcraftease.png",
+    thumbnail: "/projects/tutorcraftease.webp",
     gradient: "from-neon-indigo to-neon-violet",
     techStack: ["React", "JavaScript", "OpenAI API"],
     language: "JavaScript",
@@ -102,7 +109,7 @@ const allProjects: Project[] = [
       en: "Advanced Retrieval-Augmented Generation system for personal or enterprise knowledge management with real-time context understanding and generation.",
       zh: "先进的检索增强生成系统，用于个人或企业知识管理，具有实时上下文理解与生成能力。",
     },
-    thumbnail: "/projects/ragenius.png",
+    thumbnail: "/projects/ragenius.webp",
     gradient: "from-neon-pink to-neon-rose",
     techStack: ["Next.js", "TypeScript", "LangChain", "Chroma DB", "FastAPI"],
     language: "TypeScript",
@@ -120,7 +127,7 @@ const allProjects: Project[] = [
       en: "A data-driven GitHub ecosystem analysis system that leverages machine learning and deep learning to analyze repository health metrics and predict lifespan.",
       zh: "基于数据驱动的GitHub生态系统分析系统，通过机器学习和深度学习技术分析约9.6万条仓库的健康度指标并预测项目寿命，为开源项目可持续性和生态系统动态提供数据洞察。",
     },
-    thumbnail: "/projects/repohealth.png",
+    thumbnail: "/projects/repohealth.webp",
     gradient: "from-neon-emerald to-neon-teal",
     techStack: ["Juyter", "transformers", "PyTorch", "scikit-learn", "seaborn"],
     language: "Python",
@@ -137,7 +144,7 @@ const allProjects: Project[] = [
       en: "A multi-dimensional comparative evaluation framework for American Sign Language (ASL) alphabet recognition, benchmarking CNN, Liquid NN, and ViT architectures across accuracy, noise robustness, and feature representation interpretability.",
       zh: "一个多维度的比较评估框架，用于美国手语（ASL）字母识别，在准确率、噪声鲁棒性和特征表示可解释性方面对比CNN、Liquid NN和ViT架构。",
     },
-    thumbnail: "/projects/asl-recognition.png",
+    thumbnail: "/projects/asl-recognition.webp",
     gradient: "from-neon-orange to-neon-amber",
     techStack: [ "PyTorch", "OpenCV", "TorchDyn", "scikit-learn", "seaborn"],
     language: "Python",
@@ -387,6 +394,7 @@ interface CompactProjectCardProps {
 function CompactProjectCard({ project, language, delay }: CompactProjectCardProps) {
   // 使用第一个分类的图标
   const CategoryIcon = categoryIcons[project.categories[0]];
+  const { loaded, onLoad } = useImageLoaded();
 
   return (
     <motion.div
@@ -414,14 +422,27 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
       >
         {/* Thumbnail - 6:4 ratio with content */}
         <div className={`relative h-52 sm:h-56 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
-          {/* Image thumbnail (if available) */}
+          {/* Skeleton loader */}
+          {project.thumbnail && !loaded && (
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5">
+              <div className="absolute inset-0 skeleton-shimmer" />
+            </div>
+          )}
+          
+          {/* Image thumbnail with lazy loading */}
           {project.thumbnail && (
             <img
               src={project.thumbnail}
               alt={project.title}
-              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+              onLoad={onLoad}
+              className={`
+                absolute inset-0 w-full h-full object-cover
+                transition-opacity duration-500 ease-out
+                ${loaded ? 'opacity-100' : 'opacity-0'}
+              `}
               onError={(e) => {
-                // Hide image on error, showing gradient fallback
                 (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
