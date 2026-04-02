@@ -76,7 +76,7 @@ const allProjects: Project[] = [
     },
     thumbnail: "/projects/ux-ray.webp",
     gradient: "from-neon-cyan to-neon-teal",
-    techStack: ["Next.js", "TypeScript", "Gemini API", "Prompt Engineering"],
+    techStack: ["Next.js", "Gemini API", "Prompt Engineering"],
     language: "TypeScript",
     categories: ["ai", "fullstack"], // AI + 全栈
     githubUrl: "https://github.com/l1anch1/ux-ray",
@@ -111,7 +111,7 @@ const allProjects: Project[] = [
     },
     thumbnail: "/projects/ragenius.webp",
     gradient: "from-neon-pink to-neon-rose",
-    techStack: ["Next.js", "TypeScript", "LangChain", "Chroma DB", "FastAPI"],
+    techStack: ["React", "LangChain", "Chroma DB", "FastAPI"],
     language: "TypeScript",
     categories: ["ai", "fullstack"], // AI + 全栈
     githubUrl: "https://github.com/l1anch1/ragenius",
@@ -136,6 +136,21 @@ const allProjects: Project[] = [
     featured: true,
     //stars: 64,
     //forks: 12,
+  },
+  {
+    id: "vibeposter",
+    title: "VibePoster",
+    description: {
+      en: "An LLM-based multimodal editable poster generator using multi-agent workflows (Planner, Visual, Layout, Critic) with a dynamic OOP layout engine and RAG-powered knowledge base.",
+      zh: "基于大模型的多模态可编辑海报生成器，采用多智能体工作流（规划、视觉、布局、评审），集成动态 OOP 布局引擎和 RAG 驱动的知识库。",
+    },
+    thumbnail: "/projects/vibeposter.webp",
+    gradient: "from-neon-rose to-neon-purple",
+    techStack: ["FastAPI", "React", "Pydantic V2", "LangGraph", "RAG", "Knowledge Graph"],
+    language: "Python",
+    categories: ["ai", "fullstack"],
+    githubUrl: "https://github.com/l1anch1/VibePoster",
+    featured: true,
   },
   {
     id: "asl-recognition",
@@ -459,17 +474,14 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
         {/* Content */}
         <div className="p-5">
           {/* Title & Language */}
-          <div className="flex items-center gap-2 mb-2">
-            <h3 className="text-lg font-bold text-white group-hover:text-neon-cyan transition-colors">
+          <div className="mb-2">
+            <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
               {project.title}
             </h3>
-            <span className="px-2 py-0.5 bg-white/10 rounded text-[10px] font-mono text-white/60">
-              {project.language}
-            </span>
           </div>
 
           {/* Description */}
-          <p className="text-white/60 text-sm leading-relaxed mb-4 line-clamp-2">
+          <p className="text-white/60 text-sm sm:text-base leading-relaxed mb-4 line-clamp-2">
             {project.description[language]}
           </p>
 
@@ -480,7 +492,7 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
               {project.techStack.map((tech) => (
                 <span
                   key={tech}
-                  className="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-[10px] font-mono text-neon-cyan/80"
+                  className="px-2 py-0.5 bg-white/5 border border-white/10 rounded text-xs font-mono text-neon-cyan/80"
                 >
                   {tech}
                 </span>
@@ -506,7 +518,7 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
                   "
                   title="Source Code"
                 >
-                  <Github className="w-4 h-4" />
+                  <Github className="w-4.5 h-4.5" />
                 </motion.a>
               )}
               {project.academicUrl && (
@@ -526,7 +538,7 @@ function CompactProjectCard({ project, language, delay }: CompactProjectCardProp
                   "
                   title="Academic Paper"
                 >
-                  <GraduationCap className="w-4 h-4" />
+                  <GraduationCap className="w-4.5 h-4.5" />
                 </motion.a>
               )}
               {project.demoUrl && (

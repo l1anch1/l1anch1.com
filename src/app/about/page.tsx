@@ -36,13 +36,35 @@ interface Experience {
 
 const experiences: Experience[] = [
   {
+    period: "2026.03 - Present",
+    role: {
+      en: "AI Code Intelligence Intern",
+      zh: "AI 代码智能体实习生",
+    },
+    organization: {
+      en: "ByteDance, Beijing, China",
+      zh: "字节跳动，北京，中国",
+    },
+    type: "intern",
+    achievements: {
+      en: [
+        "Building automated evaluation systems to benchmark AI agents' code generation capabilities",
+        "Developing data production pipelines for model training and benchmarking",
+      ],
+      zh: [
+        "构建自动评测系统，评估 AI Agent 的代码生成能力",
+        "开发面向模型训练与基准测试的数据生产流水线",
+      ],
+    },
+  },
+  {
     period: "2025.07 - 2025.10",
     role: {
       en: "Mitacs Globalink Research Intern",
-      zh: "Mitacs Globalink 研究实习生",
+      zh: "Mitacs Globalink 科研实习生",
     },
     organization: {
-      en: "REALISE Lab, University of Concordia, Canada",
+      en: "REALISE Lab, Concordia University, Canada",
       zh: "REALISE 实验室，康考迪亚大学，加拿大",
     },
     type: "intern",
@@ -60,7 +82,7 @@ const experiences: Experience[] = [
     },
   },
   {
-    period: "2024.06 - Present",
+    period: "2024.06 - 2025.07",
     role: {
       en: "Research Assistant",
       zh: "研究助理",
@@ -270,11 +292,11 @@ export default function AboutPage() {
                           <TypeIcon className="w-4 h-4" />
                         </div>
                         <div>
-                          <h3 className="text-white font-semibold text-lg">
-                            {exp.role[language]}
-                          </h3>
-                          <p className="text-white/50 text-sm">
+                          <h3 className="text-white font-semibold text-base sm:text-lg leading-snug">
                             {exp.organization[language]}
+                          </h3>
+                          <p className="text-white/70 text-sm sm:text-base font-medium">
+                            {exp.role[language]}
                           </p>
                         </div>
                       </div>

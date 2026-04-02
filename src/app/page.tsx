@@ -46,14 +46,14 @@ const featuredProjects = [
     githubUrl: "https://github.com/l1anch1/ragenius",
   },
   {
-    id: "repohealth",
-    title: "RepoHealth",
-    descKey: "repoHealthDesc",
-    gradient: "from-neon-emerald to-neon-teal",
-    icon: Code2,
-    tags: ["Python", "PyTorch", "ML/DL"],
-    badge: "Research",
-    githubUrl: "https://github.com/l1anch1/Repo-Health",
+    id: "vibeposter",
+    title: "VibePoster",
+    descKey: "vibePosterDesc",
+    gradient: "from-neon-rose to-neon-purple",
+    icon: Lightbulb,
+    tags: ["Python", "FastAPI", "Multi-Agent", "RAG"],
+    badge: "engineering",
+    githubUrl: "https://github.com/l1anch1/VibePoster",
   },
 ];
 
@@ -91,7 +91,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-center mb-12 sm:mb-16 max-w-3xl"
+          className="text-center mb-12 sm:mb-16 w-full"
         >
           {/* Status Badge + Portfolio Badge */}
           <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
@@ -122,17 +122,13 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-            {t("heroTitle1")}
-          </h1>
-
-          <p className="text-lg sm:text-xl md:text-2xl text-white/60 font-light">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight whitespace-nowrap">
             {t("heroSubtitle")}{" "}
             <span className="text-white/80 font-mono">
               {displayedText}
-              <span className={`inline-block w-0.5 h-6 md:h-8 bg-neon-cyan ml-1 align-middle ${isTypingComplete ? 'animate-pulse' : ''}`}></span>
+              <span className={`inline-block w-0.5 h-5 md:h-7 bg-neon-cyan ml-1 align-middle ${isTypingComplete ? 'animate-pulse' : ''}`}></span>
             </span>
-          </p>
+          </h1>
         </motion.div>
 
         {/* Featured Works Section */}
@@ -251,7 +247,7 @@ export default function Home() {
                         </div>
                       </div>
                       {/* Description - Full Width */}
-                      <GlassCardDescription className="text-sm">
+                      <GlassCardDescription>
                         {t(project.descKey)}
                       </GlassCardDescription>
                     </div>

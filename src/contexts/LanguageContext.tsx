@@ -35,6 +35,7 @@ const translations: Record<Language, Record<string, string>> = {
     tutorCraftEaseDesc: "An AI-powered tutoring system that adapts to individual learning styles, providing personalized educational experiences at scale.",
     raGeniusDesc: "Advanced Retrieval-Augmented Generation system for enterprise knowledge management with real-time context understanding.",
     repoHealthDesc: "A data-driven GitHub ecosystem analysis system using ML/DL to analyze repository health metrics and predict project lifespan.",
+    vibePosterDesc: "An LLM-based multimodal poster generator with multi-agent workflows and a dynamic OOP layout engine for editable, design-rule-aware poster creation.",
     exploreAllProjects: "Explore All Projects →",
     viewArchive: "View Complete Archive",
     
@@ -50,7 +51,7 @@ const translations: Record<Language, Record<string, string>> = {
     getInTouch: "Get in Touch",
 
     // Projects Page
-    projectsTitle: "Code Repository",
+    projectsTitle: "Craft Lab",
     projectsSubtitle: "A complete archive of academic research, AI experiments, hackathon sprints, and open-source contributions.",
     viewSource: "Source",
     viewDemo: "Demo",
@@ -68,9 +69,9 @@ const translations: Record<Language, Record<string, string>> = {
 
     // About Page
     aboutTitle: "> whoami",
-    aboutSubtitle: "CS Senior • LLM Researcher • Full-Stack Developer",
+    aboutSubtitle: "CS Senior • LLM Intern @ ByteDance • Full-Stack Developer",
     aboutBio1: "I'm a Computer Science senior with a passion for bridging the gap between academic research and real-world software engineering. My journey began with a fascination for how humans interact with technology, leading me to pursue research in Human-Computer Interaction while simultaneously building production-ready applications.",
-    aboutBio2: "Currently, I serve as a Research Assistant exploring the intersection of Large Language Models and Human-Computer Interaction. Beyond the lab, I am a passionate full-stack builder, engineering solutions ranging from RAG-based knowledge platforms to AI-powered code analysis tools. I believe the best innovations come from deeply understanding both the theory and the craft.",
+    aboutBio2: "Previously, I served as a Research Assistant at the Chinese Academy of Sciences, exploring the intersection of Large Language Models and Human-Computer Interaction. Now I'm interning at ByteDance, working on LLM-based automated code evaluation and data production. Beyond work, I remain a passionate full-stack builder, engineering solutions from RAG-based knowledge platforms to multi-agent poster generators. I believe the best innovations come from deeply understanding both the theory and the craft.",
     experienceLog: "Experience.log",
     techArsenal: "Tech Arsenal",
     frontend: "Frontend",
@@ -114,6 +115,7 @@ const translations: Record<Language, Record<string, string>> = {
     tutorCraftEaseDesc: "一个 AI 驱动的教学系统，可以适应个人学习风格，大规模提供个性化的教育体验。",
     raGeniusDesc: "先进的检索增强生成系统，用于企业知识管理，具有实时上下文理解能力。",
     repoHealthDesc: "基于数据驱动的 GitHub 生态系统分析系统，通过机器学习和深度学习分析仓库健康度指标并预测项目寿命。",
+    vibePosterDesc: "基于大模型的多模态海报生成器，采用多智能体工作流与动态 OOP 布局引擎，支持可编辑、设计规则感知的海报创作。",
     exploreAllProjects: "查看全部项目 →",
     viewArchive: "浏览完整档案",
     
@@ -129,7 +131,7 @@ const translations: Record<Language, Record<string, string>> = {
     getInTouch: "取得联系",
 
     // Projects Page
-    projectsTitle: "代码仓库",
+    projectsTitle: "造物实验室",
     projectsSubtitle: "学术研究、AI 实验、黑客松快速开发与开源贡献的完整档案",
     viewSource: "源码",
     viewDemo: "演示",
@@ -147,9 +149,9 @@ const translations: Record<Language, Record<string, string>> = {
 
     // About Page
     aboutTitle: "> whoami",
-    aboutSubtitle: "计算机大四 • 人机交互研究员 • 全栈开发者",
+    aboutSubtitle: "计算机大四 • 字节跳动大模型实习生 • 全栈开发者",
     aboutBio1: "我是一名计算机科学大四学生，热衷于连接学术研究与实际软件工程之间的桥梁。我的旅程始于对人机交互的着迷，这引导我在追求人机交互研究的同时，构建生产级应用程序。",
-    aboutBio2: "目前，我作为研究助理探索大语言模型与人机交互的交叉领域。在研究之外，我热衷于构建解决实际问题的全栈系统——从 RAG 驱动的知识平台到 AI 驱动的代码分析工具与教育系统。我相信最好的创新来自对理论和实践的深刻理解。",
+    aboutBio2: "此前，我在中国科学院担任科研助理，探索大语言模型与人机交互的交叉领域。现在我在字节跳动实习，从事大模型代码自动评测与数据生产方向的工作。工作之余，我依然热衷于构建解决实际问题的全栈系统——从 RAG 驱动的知识平台到多智能体海报生成器。我相信最好的创新来自对理论和实践的深刻理解。",
     experienceLog: "经历日志",
     techArsenal: "技术栈",
     frontend: "前端",
