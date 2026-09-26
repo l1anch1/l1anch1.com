@@ -1,17 +1,43 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fraunces, Bricolage_Grotesque, Spline_Sans_Mono } from "next/font/google";
 import "./globals.css";
-import MeshGradientBackground from "@/components/MeshGradientBackground";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
-const inter = Inter({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-bricolage",
+  display: "swap",
+});
+
+const splineMono = Spline_Sans_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-spline-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Li Anchi | Portfolio",
-  description: "LLM Researcher & AI Engineer - Portfolio with iOS VisionOS liquid glass aesthetic",
+  title: "Anchi Li | AI & Software Engineer",
+  description:
+    "李桉弛（Anchi Li）— AI and software engineer building evaluated LLM systems, coding agents, retrieval pipelines, and production-ready applications.",
+  keywords: [
+    "Anchi Li",
+    "李桉弛",
+    "AI Engineer",
+    "Software Engineer",
+    "LLM",
+    "AI for Software Engineering",
+    "RAG",
+  ],
   icons: {
     icon: "/icon.svg",
     shortcut: "/favicon.ico",
@@ -27,13 +53,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `history.scrollRestoration = "manual"; window.scrollTo(0, 0);` }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `history.scrollRestoration = "manual"; window.scrollTo(0, 0);`,
+          }}
+        />
       </head>
-      <body className={`${inter.variable} font-sans antialiased`}>
-        <LanguageProvider>
-          <MeshGradientBackground />
-          {children}
-        </LanguageProvider>
+      <body
+        className={`${fraunces.variable} ${bricolage.variable} ${splineMono.variable} font-sans antialiased`}
+      >
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

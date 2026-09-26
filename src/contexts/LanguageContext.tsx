@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 type Language = "en" | "zh";
 
@@ -13,20 +13,19 @@ interface LanguageContextType {
 const translations: Record<Language, Record<string, string>> = {
   en: {
     // Navbar
-    backToAcademic: "Back to Academic Home",
+    backToAcademic: "Go to Academic Home",
     home: "Home",
     work: "Projects",
     about: "About",
     contact: "Contact",
     
     // Hero
-    portfolio: "Portfolio 2026",
-    heroTitle1: "Bridging AI Research & Engineering",
-    heroSubtitle: "Li Anchi.",
-    heroRole: "Researcher. Builder. Innovator.",
+    heroTitle1: "I build and evaluate LLM agents, code intelligence systems, and production-ready AI applications.",
+    heroSubtitle: "Anchi Li.",
+    heroRole: "AI Engineer · Software Engineer",
     
     // Featured Works (Homepage)
-    featuredWorks: "Selected Highlights",
+    featuredWorks: "Selected Engineering Work",
     featuredProject: "Featured",
     squintaxDesc: "An intelligent code analysis tool that helps developers understand complex codebases through AI-powered visualization and natural language explanations.",
     uxRayDesc: "A web UI inspection tool that automatically identifies usability issues and provides actionable solutions using computer vision and LLM analysis.",
@@ -37,7 +36,9 @@ const translations: Record<Language, Record<string, string>> = {
     repoHealthDesc: "A data-driven GitHub ecosystem analysis system using ML/DL to analyze repository health metrics and predict project lifespan.",
     vibePosterDesc: "An LLM-based multimodal poster generator with multi-agent workflows and a dynamic OOP layout engine for editable, design-rule-aware poster creation.",
     exploreAllProjects: "Explore All Projects →",
-    viewArchive: "View Complete Archive",
+    viewArchive: "View All Projects",
+    viewExperience: "View Experience",
+    githubProfile: "GitHub Profile",
     
     // Skills
     researchInterests: "Research Interests",
@@ -47,12 +48,12 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Contact Home
     letsConnect: "Let's Connect",
-    connectDesc: "Interested in collaboration or just want to chat about HCI and AI?",
+    connectDesc: "I'm interested in opportunities across AI engineering, software engineering, and applied LLM systems.",
     getInTouch: "Get in Touch",
 
     // Projects Page
-    projectsTitle: "Craft Lab",
-    projectsSubtitle: "A complete archive of academic research, AI experiments, hackathon sprints, and open-source contributions.",
+    projectsTitle: "Engineering & Research",
+    projectsSubtitle: "Selected systems and studies across LLM applications, AI for software engineering, full-stack development, and machine learning.",
     viewSource: "Source",
     viewDemo: "Demo",
     allProjects: "Project Archive",
@@ -69,44 +70,44 @@ const translations: Record<Language, Record<string, string>> = {
 
     // About Page
     aboutTitle: "> whoami",
-    aboutSubtitle: "CS Senior • LLM Intern @ ByteDance • Full-Stack Developer",
-    aboutBio1: "I'm a Computer Science senior with a passion for bridging the gap between academic research and real-world software engineering. My journey began with a fascination for how humans interact with technology, leading me to pursue research in Human-Computer Interaction while simultaneously building production-ready applications.",
-    aboutBio2: "Previously, I served as a Research Assistant at the Chinese Academy of Sciences, exploring the intersection of Large Language Models and Human-Computer Interaction. Now I'm interning at ByteDance, working on LLM-based automated code evaluation and data production. Beyond work, I remain a passionate full-stack builder, engineering solutions from RAG-based knowledge platforms to multi-agent poster generators. I believe the best innovations come from deeply understanding both the theory and the craft.",
-    experienceLog: "Experience.log",
-    techArsenal: "Tech Arsenal",
+    aboutBio1: "I'm a Computer Science graduate from Beijing University of Technology. My work sits at the intersection of LLM systems and software engineering: coding-agent evaluation, repository-level understanding, retrieval pipelines, and production full-stack applications.",
+    aboutBio2: "I worked with ByteDance Seed, the Institute of Software at the Chinese Academy of Sciences, and Concordia University's REALISE Lab. I have a CHI 2025 publication and received Fall 2026 master's offers from Carnegie Mellon University, UCLA, and other computer science programs.",
+    experienceLog: "Experience",
+    education: "Education",
+    publications: "Publications",
+    techArsenal: "Technical Skills",
     frontend: "Frontend",
     backend: "Backend / Systems",
     aiml: "AI/ML & Data",
     present: "Present",
 
     // Contact Page
-    contactTitle: "Establish Connection",
-    contactSubtitle: "Open channel for collaboration, opportunities, or technical discussions.",
-    directChannels: "Direct Channels",
-    orSendMessage: "Or transmit a message",
+    contactTitle: "Let's Talk",
+    contactSubtitle: "For AI engineering, software engineering, research collaboration, or technical discussions.",
+    directChannels: "Contact",
+    orSendMessage: "Send a message",
     yourName: "your_name",
     yourEmail: "your_email",
     yourMessage: "message_content",
-    executeTransmit: "> Execute Transmit",
-    channelSecure: "// All channels secured",
+    executeTransmit: "Send Message",
+    channelSecure: "Open to engineering opportunities",
     emailCopied: "Email copied to clipboard",
   },
   zh: {
     // Navbar
-    backToAcademic: "返回学术主页",
+    backToAcademic: "前往学术主页",
     home: "首页",
     work: "项目",
     about: "关于",
     contact: "联系",
     
     // Hero
-    portfolio: "作品集 2026",
-    heroTitle1: "致力于弥合学术研究与工程落地的鸿沟",
+    heroTitle1: "构建并评测大模型智能体、代码智能系统与可落地的 AI 应用。",
     heroSubtitle: "李桉弛",
-    heroRole: "研究者·构建者·创新者",
+    heroRole: "AI 工程师 · 软件工程师",
     
     // Featured Works (Homepage)
-    featuredWorks: "精选作品",
+    featuredWorks: "精选工程项目",
     featuredProject: "精选",
     squintaxDesc: "一个智能代码分析工具，通过 AI 驱动的可视化和自然语言解释，帮助开发者理解复杂的代码库。",
     uxRayDesc: "一个网页 UI 审查工具，通过计算机视觉和大模型分析自动识别可用性问题并提供可操作的解决方案。",
@@ -117,7 +118,9 @@ const translations: Record<Language, Record<string, string>> = {
     repoHealthDesc: "基于数据驱动的 GitHub 生态系统分析系统，通过机器学习和深度学习分析仓库健康度指标并预测项目寿命。",
     vibePosterDesc: "基于大模型的多模态海报生成器，采用多智能体工作流与动态 OOP 布局引擎，支持可编辑、设计规则感知的海报创作。",
     exploreAllProjects: "查看全部项目 →",
-    viewArchive: "浏览完整档案",
+    viewArchive: "查看全部项目",
+    viewExperience: "查看经历",
+    githubProfile: "GitHub 主页",
     
     // Skills
     researchInterests: "研究方向",
@@ -127,12 +130,12 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Contact Home
     letsConnect: "联系我",
-    connectDesc: "对合作感兴趣，或者想聊聊人机交互和 AI？",
+    connectDesc: "关注 AI 工程、软件工程与大模型系统相关的校招、实习及合作机会。",
     getInTouch: "取得联系",
 
     // Projects Page
-    projectsTitle: "造物实验室",
-    projectsSubtitle: "学术研究、AI 实验、黑客松快速开发与开源贡献的完整档案",
+    projectsTitle: "工程与研究",
+    projectsSubtitle: "围绕大模型应用、智能化软件工程、全栈开发与机器学习的代表性系统和研究成果。",
     viewSource: "源码",
     viewDemo: "演示",
     allProjects: "项目档案",
@@ -149,26 +152,27 @@ const translations: Record<Language, Record<string, string>> = {
 
     // About Page
     aboutTitle: "> whoami",
-    aboutSubtitle: "计算机大四 • 字节跳动大模型实习生 • 全栈开发者",
-    aboutBio1: "我是一名计算机科学大四学生，热衷于连接学术研究与实际软件工程之间的桥梁。我的旅程始于对人机交互的着迷，这引导我在追求人机交互研究的同时，构建生产级应用程序。",
-    aboutBio2: "此前，我在中国科学院担任科研助理，探索大语言模型与人机交互的交叉领域。现在我在字节跳动实习，从事大模型代码自动评测与数据生产方向的工作。工作之余，我依然热衷于构建解决实际问题的全栈系统——从 RAG 驱动的知识平台到多智能体海报生成器。我相信最好的创新来自对理论和实践的深刻理解。",
-    experienceLog: "经历日志",
-    techArsenal: "技术栈",
+    aboutBio1: "我本科毕业于北京工业大学计算机科学与技术专业，关注大模型系统与软件工程的交叉方向，包括 Coding Agent 评测、仓库级代码理解、检索增强生成与生产级全栈应用。",
+    aboutBio2: "我曾在字节跳动 Seed、中国科学院软件研究所与加拿大康考迪亚大学 REALISE 实验室从事工程和研究工作，合著 CHI 2025 论文，并已获得 CMU、UCLA 等校 2026 Fall 计算机相关硕士项目录取。",
+    experienceLog: "实习与研究经历",
+    education: "教育背景",
+    publications: "论文发表",
+    techArsenal: "个人技能",
     frontend: "前端",
     backend: "后端 / 系统",
     aiml: "AI/ML & 数据",
     present: "至今",
 
     // Contact Page
-    contactTitle: "建立连接",
-    contactSubtitle: "开放合作、机会或技术讨论的通道",
-    directChannels: "直接通道",
-    orSendMessage: "或发送消息",
+    contactTitle: "保持联系",
+    contactSubtitle: "欢迎联系 AI 工程、软件工程、科研合作或其他技术话题。",
+    directChannels: "联系方式",
+    orSendMessage: "发送消息",
     yourName: "你的姓名",
     yourEmail: "你的邮箱",
     yourMessage: "消息内容",
-    executeTransmit: "> 执行发送",
-    channelSecure: "// 所有通道已加密",
+    executeTransmit: "发送消息",
+    channelSecure: "期待工程与研究机会",
     emailCopied: "邮箱已复制到剪贴板",
   },
 };
@@ -181,6 +185,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === "en" ? "zh" : "en"));
   };
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const t = (key: string): string => {
     return translations[language][key] || key;

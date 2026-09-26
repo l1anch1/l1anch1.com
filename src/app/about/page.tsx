@@ -1,395 +1,291 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Terminal,
-  Briefcase,
-  GraduationCap,
-  Code2,
-  Brain,
-  Globe,
-  Server,
-  Layers,
-  GitBranch,
-  Plane,
-} from "lucide-react";
-import GlassNavbar from "@/components/ui/GlassNavbar";
+import SiteNav from "@/components/SiteNav";
+import SiteFooter from "@/components/SiteFooter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-// Experience data
 interface Experience {
   period: string;
-  role: {
-    en: string;
-    zh: string;
-  };
-  organization: {
-    en: string;
-    zh: string;
-  };
-  type: "research" | "work" | "education" | "intern";
-  achievements: {
-    en: string[];
-    zh: string[];
-  };
+  role: { en: string; zh: string };
+  organization: { en: string; zh: string };
+  location: { en: string; zh: string };
+  achievements: { en: string[]; zh: string[] };
 }
 
 const experiences: Experience[] = [
   {
-    period: "2026.03 - Present",
-    role: {
-      en: "AI Code Intelligence Intern",
-      zh: "AI 代码智能体实习生",
-    },
-    organization: {
-      en: "ByteDance, Beijing, China",
-      zh: "字节跳动，北京，中国",
-    },
-    type: "intern",
+    period: "2026.03 — 2026.06",
+    role: { en: "Algorithm Engineering Intern · Code Evaluation", zh: "算法实习生 · 代码评测" },
+    organization: { en: "ByteDance · Seed", zh: "字节跳动 · Seed" },
+    location: { en: "Beijing, China", zh: "中国，北京" },
     achievements: {
       en: [
-        "Building automated evaluation systems to benchmark AI agents' code generation capabilities",
-        "Developing data production pipelines for model training and benchmarking",
+        "Built training-task generation and evaluation pipelines for model capabilities including feature implementation, test generation, and repository-level code understanding, with automated environments, multilingual support, and distributed execution.",
+        "Designed a four-stage rule-based difficulty funnel for millions of test-generation candidates. The filtered score distribution matched Best-of-N while substantially reducing its inference dependency.",
+        "Developed a repository-understanding pipeline that parses documentation and code structure, locates key modules, and produces verifiable facts and QA pairs for tens of thousands of mid-training and RL samples.",
+        "Led a frontend Agent-as-a-Judge pipeline that converts prompts and generated web pages into UI tasks and rubrics. A 2K+ black-box benchmark achieved 90%+ human–AI scoring agreement.",
       ],
       zh: [
-        "构建自动评测系统，评估 AI Agent 的代码生成能力",
-        "开发面向模型训练与基准测试的数据生产流水线",
+        "参与 Seed 模型 Coding 能力后训练与评测，建设 Feature Implementation、Test Generation 与仓库级代码理解任务生成和执行链路，完成环境自动构建、多语言支持及分布式并行扩展。",
+        "面向百万级 Test Generation 候选任务设计四阶段规则难度漏斗，筛选后模型得分分布与 Best-of-N 基本一致，大幅降低高成本推理依赖。",
+        "开发仓库级代码理解 Pipeline，利用 LLM 解析仓库文档与代码结构、定位关键模块，生成可验证事实单元与 QA，支撑万级 Mid-training / RL 样本构建。",
+        "主导前端 Agent-as-a-Judge 评测链路，将 Prompt 与生成页面转换为 UI Task 和 Rubrics，并结合执行轨迹与前端 Skills 进行功能和视觉评测；2K+ 样本 Benchmark 人机评一致率达到 90%+。",
       ],
     },
   },
   {
-    period: "2025.07 - 2025.10",
-    role: {
-      en: "Mitacs Globalink Research Intern",
-      zh: "Mitacs Globalink 科研实习生",
-    },
-    organization: {
-      en: "REALISE Lab, Concordia University, Canada",
-      zh: "REALISE 实验室，康考迪亚大学，加拿大",
-    },
-    type: "intern",
+    period: "2025.07 — 2025.10",
+    role: { en: "Mitacs Globalink Research Intern", zh: "Mitacs 国际科研实习生" },
+    organization: { en: "REALISE Lab · Concordia University", zh: "康考迪亚大学 · REALISE 实验室" },
+    location: { en: "Montreal, Canada", zh: "加拿大，蒙特利尔" },
     achievements: {
       en: [
-        "Conducting AI4SE research on LLM-powered low-resource code generation",
-        "Collaborating with international research team",
-        "Funded by Mitacs Globalink Research Internship program",
+        "Led a prompt-engineering and RAG approach for low-resource library code generation, building a vector store with 5,000+ instruction–code pairs and API documents to address long-tail knowledge gaps.",
+        "Designed a Retriever–Generator multi-agent workflow for automated prompt orchestration. Across libraries including Plotly, the approach reduced code-generation errors by up to 25%; the work is being prepared for ASE submission.",
       ],
       zh: [
-        "开展 LLM 辅助低资源代码生成的 AI4SE 研究",
-        "与国际研究团队合作",
-        "获 Mitacs Globalink 研究实习项目资助",
+        "面向低资源库代码生成，主导 Prompt Engineering 与 RAG 优化方案，构建包含 5,000+ 指令—代码对及 API 文档的向量库，缓解模型长尾知识缺失。",
+        "设计 Retriever–Generator 多智能体自动编排流，在 Plotly 等低资源可视化库上使代码生成错误率最多降低 25%；相关成果拟投 ASE。",
       ],
     },
   },
   {
-    period: "2024.06 - 2025.07",
-    role: {
-      en: "Research Assistant",
-      zh: "研究助理",
-    },
-    organization: {
-      en: "HCI & IIP Lab, ISCAS, China",
-      zh: "人机交互与智能信息处理实验室，中国科学院软件研究所，中国",
-    },
-    type: "research",
+    period: "2024.06 — 2025.07",
+    role: { en: "Research Assistant", zh: "科研助理" },
+    organization: { en: "HCI & IIP Lab · ISCAS", zh: "中国科学院软件研究所 · 人机交互与智能信息处理实验室" },
+    location: { en: "Beijing, China", zh: "中国，北京" },
     achievements: {
       en: [
-        "fine-tuned the Llama LLM and developed an agent application",
-        "leading research on LLM-based educational system, published papers at CHI'25 CHI'26",
-        "Developed dynamic knowledge graphs to identify knowledge gaps",
+        "Led the interaction module for an LLM-enhanced low-code agent platform, implementing multi-turn conversation and memory with LangChain. Built vertical instruction-tuning data and applied LoRA to Llama 3–8B, improving accuracy by 10%.",
+        "Contributed experiment design, data mining, and writing to LLM-assisted question generation research. Built a Neo4j knowledge graph and error-attribution algorithm spanning 100+ concepts; co-authored CHI 2025 and an ongoing CHI 2027 submission.",
       ],
       zh: [
-        "参与Llama大模型微调与智能体应用开发",
-        "主导大语言模型驱动的教育系统研究，发表 CHI'25 CHI'26 论文",
-        "开发动态知识图谱以归因知识薄弱环节",
-      ],
-    },
-  },
-  {
-    period: "2022.09 - Present",
-    role: {
-      en: "B.S. in Computer Science and Technology",
-      zh: "计算机科学与技术学士",
-    },
-    organization: {
-      en: "Beijing University of Technology",
-      zh: "北京工业大学",
-    },
-    type: "education",
-    achievements: {
-      en: [
-        "GPA: 3.8/4.0, Academic Excellence Scholarship",
-        "Coursework: HCI, DL, Big Data, Compilers, Operating Systems, etc.",
-      ],
-      zh: [
-        "GPA: 3.8/4.0，优秀学生奖学金",
-        "课程：人机交互、深度学习、大数据、编译原理、操作系统等",
+        "主导“LLM 增强型低代码 Agent 构建平台”交互模块，基于 LangChain 实现多轮对话与记忆；构建垂直领域指令微调数据并使用 LLaMA-Factory 对 Llama 3–8B 进行 LoRA 微调，准确率提升 10%。",
+        "参与大模型辅助题目生成研究，负责实验设计、数据挖掘和论文撰写；基于 Neo4j 构建覆盖 100+ 知识点的知识图谱及错误归因算法，合著 CHI 2025 论文及 CHI 2027 在投稿件。",
       ],
     },
   },
 ];
 
-// Skills data
-interface SkillCategory {
-  name: {
-    en: string;
-    zh: string;
-  };
-  key: string;
-  icon: React.ReactNode;
-  color: string;
-  skills: string[];
-}
-
-const skillCategories: SkillCategory[] = [
+const education = [
   {
-    name: { en: "Frontend", zh: "前端" },
-    key: "frontend",
-    icon: <Globe className="w-5 h-5" />,
-    color: "from-neon-cyan to-neon-teal",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vite"],
+    period: "Fall 2026",
+    title: { en: "Graduate Admissions", zh: "硕士项目录取" },
+    institution: {
+      en: "Computer science–related master's offers from Carnegie Mellon University, UCLA, and other programs",
+      zh: "已获得卡耐基梅隆大学、加利福尼亚大学洛杉矶分校等校计算机相关硕士项目录取",
+    },
+    details: { en: "Offers received for Fall 2026", zh: "2026 Fall 硕士项目录取" },
   },
   {
-    name: { en: "Backend / Systems", zh: "后端 / 系统" },
-    key: "backend",
-    icon: <Server className="w-5 h-5" />,
-    color: "from-neon-purple to-neon-violet",
-    skills: ["Node.js", "Python", "C/C++", "FastAPI",  "Chroma DB", "Docker"],
-  },
-  {
-    name: { en: "AI/ML & Data", zh: "AI/ML & 数据" },
-    key: "aiml",
-    icon: <Brain className="w-5 h-5" />,
-    color: "from-neon-pink to-neon-rose",
-    skills: ["PyTorch", "LangChain", "RAG", "HuggingFace", "Scikit-Learn", "pandas"],
+    period: "2022.09 — 2026.07",
+    title: { en: "B.S. in Computer Science and Technology", zh: "计算机科学与技术学士" },
+    institution: { en: "Beijing University of Technology", zh: "北京工业大学" },
+    details: {
+      en: "GPA 90.01/100 (3.8/4.0) · Mitacs Globalink Research Award · Academic Excellence Scholarships (2023, 2025) · Innovation & Entrepreneurship Scholarship",
+      zh: "GPA 90.01/100（3.8/4.0）· Mitacs 国际科研奖学金 · 校级学习优秀奖学金（2023、2025）· 校级创新创业奖学金",
+    },
   },
 ];
 
-// Type icons mapping
-const typeIcons = {
-  research: GraduationCap,
-  work: Briefcase,
-  education: Code2,
-  intern: Plane,
-};
+const publications = [
+  {
+    status: "ACM CHI 2025",
+    title: "TutorCraftEase: Enhancing Pedagogical Question Creation with Large Language Models",
+    authors: "Kang, W., Zhang, L., Peng, X., Zhang, H., Li, A., et al.",
+    venue: {
+      en: "Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems, pp. 1–22.",
+      zh: "发表于 2025 CHI Conference on Human Factors in Computing Systems，CCF A 类会议。",
+    },
+    href: "https://doi.org/10.1145/3706598.3713731",
+  },
+  {
+    status: "UNDER REVIEW · CHI 2027",
+    title: "AdaptQuest: Adaptive Pedagogical Question Crafting Tool Driven by Knowledge Graph and Large Language Model",
+    authors: "Kang, W., Yang, M., Li, A., Zhang, H., et al.",
+    venue: {
+      en: "Manuscript under review for ACM CHI 2027.",
+      zh: "ACM CHI 2027 在投稿件。",
+    },
+  },
+];
 
-const typeColors = {
-  research: "text-neon-cyan",
-  work: "text-neon-purple",
-  education: "text-neon-pink",
-  intern: "text-neon-emerald",
-};
+const skillCategories = [
+  {
+    name: { en: "Languages", zh: "编程语言" },
+    skills: ["Python", "C/C++", "JavaScript / TypeScript", "Java", "SQL"],
+  },
+  {
+    name: { en: "AI / ML", zh: "AI / 机器学习" },
+    skills: ["PyTorch", "LangChain", "Transformers", "RAG", "LLM Agents", "LoRA"],
+  },
+  {
+    name: { en: "Engineering", zh: "软件工程" },
+    skills: ["React", "FastAPI", "Node.js", "MySQL", "Docker", "Nginx", "CI/CD", "Git"],
+  },
+];
 
-const dotColors = {
-  research: "from-neon-cyan to-neon-teal",
-  work: "from-neon-purple to-neon-violet",
-  education: "from-neon-pink to-neon-rose",
-  intern: "from-neon-emerald to-neon-teal",
-};
+const ease = [0.2, 0.7, 0.2, 1] as const;
 
 export default function AboutPage() {
   const { language, t } = useLanguage();
 
   return (
     <>
-      <GlassNavbar />
+      <SiteNav />
 
-      <main className="relative min-h-screen pt-28 pb-16 px-4 sm:px-6 flex flex-col items-center">
-        {/* Section 1: Bio */}
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="w-full max-w-4xl mb-20"
-        >
-          {/* Header */}
-          <div className="mb-8">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-white/10 backdrop-blur-xl rounded-full border border-white/20"
-            >
-              <Terminal className="w-4 h-4 text-neon-cyan" />
-              <span className="text-white/80 text-sm font-mono">{t("aboutSubtitle")}</span>
-            </motion.div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink bg-clip-text text-transparent font-mono">
-                {t("aboutTitle")}
-              </span>
-            </h1>
-          </div>
-
-          {/* Bio Glass Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+      <main className="mx-auto max-w-[1080px] px-6 pb-20 sm:px-10">
+        <section className="pb-16 pt-10">
+          <motion.span
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[24px] p-6 sm:p-8"
+            transition={{ duration: 0.55, ease, delay: 0.08 }}
+            className="u-label text-clay"
           >
-            <p className="text-white/80 text-lg leading-relaxed mb-6">
-              {t("aboutBio1")}
-            </p>
-            <p className="text-white/70 text-lg leading-relaxed">
-              {t("aboutBio2")}
-            </p>
+            {language === "zh" ? "背景与经历" : "Background & Experience"}
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease, delay: 0.14 }}
+            className="mt-3 font-serif text-[52px] font-semibold leading-[1.02] tracking-[-0.02em] text-ink sm:text-[68px]"
+          >
+            {language === "zh" ? "关于李桉弛" : "About Anchi"}
+          </motion.h1>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease, delay: 0.22 }}
+            className="mt-9 grid max-w-[82ch] gap-5"
+          >
+            <p className="text-[18px] leading-[1.8] text-ink-soft">{t("aboutBio1")}</p>
+            <p className="text-[18px] leading-[1.8] text-ink-soft">{t("aboutBio2")}</p>
           </motion.div>
-        </motion.section>
+        </section>
 
-        {/* Section 2: Experience Log */}
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="w-full max-w-4xl mb-20"
-        >
-          {/* Section Header */}
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center">
-              <GitBranch className="w-5 h-5 text-white" />
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white font-mono">
-              {t("experienceLog")}
-            </h2>
-          </div>
+        <SectionHeader title={t("education")} label="EDUCATION" />
+        <section className="pb-16">
+          {education.map((item, index) => (
+            <motion.div
+              key={item.period}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.5, ease, delay: index * 0.06 }}
+              className="grid gap-3 border-b border-rule py-8 md:grid-cols-[180px_minmax(0,1fr)]"
+            >
+              <div className="font-mono text-[12px] uppercase tracking-[0.06em] text-clay">{item.period}</div>
+              <div>
+                <h3 className="font-serif text-[24px] font-semibold text-ink">{item.title[language]}</h3>
+                <p className="mt-1 text-[17px] text-ink-soft">{item.institution[language]}</p>
+                <p className="mt-3 max-w-[76ch] font-mono text-[12px] leading-relaxed text-faint">{item.details[language]}</p>
+              </div>
+            </motion.div>
+          ))}
+        </section>
 
-          {/* Timeline */}
-          <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-[140px] sm:left-[180px] top-0 bottom-0 w-px bg-gradient-to-b from-neon-purple via-neon-cyan to-neon-pink opacity-30" />
-
-            {/* Entries */}
-            <div className="space-y-8">
-              {experiences.map((exp, index) => {
-                const TypeIcon = typeIcons[exp.type];
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                    className="flex gap-4 sm:gap-6"
-                  >
-                    {/* Date - Monospace */}
-                    <div className="w-[120px] sm:w-[160px] flex-shrink-0 text-right">
-                      <span className="text-white/50 text-xs sm:text-sm font-mono">
-                        {exp.period.includes("Present") 
-                          ? exp.period.replace("Present", t("present"))
-                          : exp.period}
-                      </span>
-                    </div>
-
-                    {/* Dot on timeline */}
-                    <div className="relative flex-shrink-0">
-                      <div className={`w-3 h-3 rounded-full bg-gradient-to-br ${dotColors[exp.type]} ring-4 ring-dark-900`} />
-                    </div>
-
-                    {/* Content Card */}
-                    <div className="flex-1 bg-white/5 backdrop-blur-xl border border-white/10 rounded-xl p-4 sm:p-5 hover:bg-white/10 transition-colors">
-                      <div className="flex items-start gap-3 mb-3">
-                        <div className={`p-2 rounded-lg bg-white/10 ${typeColors[exp.type]}`}>
-                          <TypeIcon className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <h3 className="text-white font-semibold text-base sm:text-lg leading-snug">
-                            {exp.organization[language]}
-                          </h3>
-                          <p className="text-white/70 text-sm sm:text-base font-medium">
-                            {exp.role[language]}
-                          </p>
-                        </div>
-                      </div>
-                      <ul className="space-y-1.5">
-                        {exp.achievements[language].map((achievement, i) => (
-                          <li key={i} className="flex items-start gap-2 text-white/70 text-sm">
-                            <span className="text-neon-cyan font-mono mt-1">→</span>
-                            {achievement}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Section 3: Tech Arsenal */}
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="w-full max-w-4xl"
-        >
-          {/* Section Header */}
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-teal flex items-center justify-center">
-              <Layers className="w-5 h-5 text-white" />
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white font-mono">
-              {t("techArsenal")}
-            </h2>
-          </div>
-
-          {/* Skills Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {skillCategories.map((category, index) => (
-              <motion.div
-                key={category.key}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.9 + index * 0.1 }}
-                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[20px] p-5 hover:bg-white/10 transition-colors"
-              >
-                {/* Category Header */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`p-2.5 rounded-xl bg-gradient-to-br ${category.color}`}>
-                    {category.icon}
-                  </div>
-                  <h3 className="text-white font-semibold">
-                    {category.name[language]}
-                  </h3>
-                </div>
-
-                {/* Skills as Terminal Badges */}
-                <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="
-                        px-2.5 py-1
-                        bg-white/5
-                        border border-white/10
-                        rounded-md
-                        text-xs font-mono text-white/70
-                        hover:bg-white/10 hover:text-neon-cyan hover:border-neon-cyan/30
-                        transition-all cursor-default
-                      "
-                    >
-                      {skill}
-                    </span>
+        <SectionHeader title={t("experienceLog")} label="EXPERIENCE" />
+        <section className="pb-16">
+          {experiences.map((item, index) => (
+            <motion.article
+              key={item.organization.en}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5, ease, delay: index * 0.05 }}
+              className="grid gap-5 border-b border-rule py-9 md:grid-cols-[180px_minmax(0,1fr)]"
+            >
+              <div className="font-mono text-[12px] uppercase tracking-[0.05em] text-faint">
+                <div className="text-clay">{item.period}</div>
+                <div className="mt-2">{item.location[language]}</div>
+              </div>
+              <div>
+                <h3 className="font-serif text-[26px] font-semibold leading-snug text-ink">{item.organization[language]}</h3>
+                <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.05em] text-green">{item.role[language]}</p>
+                <ul className="mt-5 grid gap-3">
+                  {item.achievements[language].map((achievement) => (
+                    <li key={achievement} className="flex gap-3 text-[15px] leading-relaxed text-ink-soft">
+                      <span aria-hidden className="font-mono text-clay">→</span>
+                      <span>{achievement}</span>
+                    </li>
                   ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
+                </ul>
+              </div>
+            </motion.article>
+          ))}
+        </section>
 
-        {/* Floating Elements */}
-        <FloatingElements />
+        <SectionHeader title={t("publications")} label="RESEARCH" />
+        <section className="pb-16">
+          {publications.map((publication, index) => (
+            <motion.article
+              key={publication.title}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, ease, delay: index * 0.06 }}
+              className="grid gap-4 border-b border-rule py-8 md:grid-cols-[180px_minmax(0,1fr)]"
+            >
+              <div className="font-mono text-[11px] uppercase tracking-[0.07em] text-clay">{publication.status}</div>
+              <div>
+                <h3 className="font-serif text-[23px] font-semibold leading-snug text-ink">{publication.title}</h3>
+                <p className="mt-2 text-[14px] text-ink-soft">{publication.authors}</p>
+                <p className="mt-2 text-[14px] leading-relaxed text-faint">{publication.venue[language]}</p>
+                {publication.href && (
+                  <a
+                    href={publication.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-block font-mono text-[11px] uppercase tracking-[0.06em] text-ink underline decoration-rule underline-offset-4 hover:text-green hover:decoration-green"
+                  >
+                    DOI ↗
+                  </a>
+                )}
+              </div>
+            </motion.article>
+          ))}
+        </section>
+
+        <SectionHeader title={t("techArsenal")} label="STACK" />
+        <section className="grid gap-10 pb-4 md:grid-cols-3">
+          {skillCategories.map((category, index) => (
+            <motion.div
+              key={category.name.en}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.5, ease, delay: index * 0.06 }}
+            >
+              <h3 className="mb-4 font-serif text-[20px] font-semibold text-ink">{category.name[language]}</h3>
+              <div className="flex flex-wrap gap-2">
+                {category.skills.map((skill) => (
+                  <span key={skill} className="border border-rule px-2.5 py-1 font-mono text-[12px] text-ink-soft">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </section>
+
+        <section className="mt-16 grid gap-4 border-t border-rule pt-8 font-mono text-[12px] text-faint sm:grid-cols-2">
+          <p>{language === "zh" ? "英语：托福 107 / 120；大学英语四、六级" : "English: TOEFL 107 / 120; CET-4 & CET-6"}</p>
+          <p className="sm:text-right">LaTeX · Git · CI/CD · Linux</p>
+        </section>
       </main>
+
+      <SiteFooter className="mt-16" />
     </>
   );
 }
 
-function FloatingElements() {
+function SectionHeader({ title, label }: { title: string; label: string }) {
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-[-1]">
-      <div className="absolute top-[20%] left-[5%] w-12 sm:w-16 h-12 sm:h-16 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 rotate-12" />
-      <div className="absolute top-[30%] right-[8%] w-16 sm:w-20 h-16 sm:h-20 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 -rotate-6" />
-      <div className="absolute bottom-[25%] left-[3%] w-20 sm:w-24 h-20 sm:h-24 bg-white/5 backdrop-blur-xl rounded-[28px] border border-white/10 rotate-45" />
+    <div className="flex items-center gap-4 border-t-[3px] border-ink pt-3.5">
+      <h2 className="font-serif text-[28px] font-semibold text-ink">{title}</h2>
+      <span className="flex-1" />
+      <span className="font-mono text-[12px] tracking-[0.08em] text-clay">{label}</span>
     </div>
   );
 }

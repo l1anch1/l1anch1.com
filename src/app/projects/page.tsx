@@ -1,177 +1,122 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Github, 
-  Terminal, 
-  Brain, 
-  Globe, 
-  Search,
-  Sparkles,
-  FlaskConical,
-  Check,
-  GraduationCap,
-} from "lucide-react";
-import GlassNavbar from "@/components/ui/GlassNavbar";
+import { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import SiteNav from "@/components/SiteNav";
+import SiteFooter from "@/components/SiteFooter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-// Image loading state hook
-function useImageLoaded() {
-  const [loaded, setLoaded] = useState(false);
-  const onLoad = useCallback(() => setLoaded(true), []);
-  return { loaded, onLoad };
-}
-
-// Project categories
 type Category = "all" | "research" | "ai" | "fullstack";
+type SelectableCategory = Exclude<Category, "all">;
 
-// Project data type
 interface Project {
   id: string;
   title: string;
-  description: {
-    en: string;
-    zh: string;
-  };
-  thumbnail?: string; // Image path like "/projects/xxx.png"
-  gradient: string;   // Fallback gradient
+  description: { en: string; zh: string };
+  thumbnail: string;
   techStack: string[];
   language: string;
-  categories: Exclude<Category, "all">[]; // 支持多个分类
+  categories: SelectableCategory[];
+  metrics?: string[];
   githubUrl?: string;
-  academicUrl?: string; // 学术论文链接
+  academicUrl?: string;
   demoUrl?: string;
   featured?: boolean;
-  stars?: number;
-  forks?: number;
 }
 
-// Project data - Only TypeScript projects + UX-Ray
 const allProjects: Project[] = [
-  // {
-  //   id: "squintax",
-  //   title: "Squintax",
-  //   description: {
-  //     en: "An intelligent code analysis tool that helps developers understand complex codebases through AI-powered visualization and natural language explanations.",
-  //     zh: "一个智能代码分析工具，通过 AI 驱动的可视化和自然语言解释，帮助开发者理解复杂的代码库。",
-  //   },
-  //   thumbnail: "/projects/squintax.png",
-  //   gradient: "from-neon-purple to-neon-pink",
-  //   techStack: ["Next.js", "TypeScript", "LangChain", "GPT-4", "D3.js"],
-  //   language: "TypeScript",
-  //   categories: ["ai", "fullstack"], // AI + 全栈
-  //   githubUrl: "https://github.com",
-  //   demoUrl: "https://demo.com",
-  //   featured: true,
-  //   stars: 128,
-  //   forks: 24,
-  // },
-  {
-    id: "ux-ray",
-    title: "UX-Ray",
-    description: {
-      en: "A web UI inspection tool that automatically identifies usability issues and provides actionable solutions using LLM vision analysis.",
-      zh: "一个网页 UI 审查工具，通过大模型视觉分析自动识别可用性问题并提供可操作的解决方案。",
-    },
-    thumbnail: "/projects/ux-ray.webp",
-    gradient: "from-neon-cyan to-neon-teal",
-    techStack: ["Next.js", "Gemini API", "Prompt Engineering"],
-    language: "TypeScript",
-    categories: ["ai", "fullstack"], // AI + 全栈
-    githubUrl: "https://github.com/l1anch1/ux-ray",
-    demoUrl: "https://ux-ray-ai.vercel.app",
-    featured: true,
-    stars: 86,
-    forks: 15,
-  },
-  {
-    id: "tutorcraftease",
-    title: "TutorCraftEase",
-    description: {
-      en: "An AI-powered tutoring system that adapts to individual learning styles, providing personalized educational experiences at scale.",
-      zh: "一个 AI 驱动的教学系统，可以适应个人学习风格，大规模提供个性化的教育体验。",
-    },
-    thumbnail: "/projects/tutorcraftease.webp",
-    gradient: "from-neon-indigo to-neon-violet",
-    techStack: ["React", "JavaScript", "OpenAI API"],
-    language: "JavaScript",
-    categories: ["research", "ai"], // 研究 + AI
-    //githubUrl: "https://github.com",
-    academicUrl: "https://doi.org/10.1145/3706598.3713731",
-    featured: true,
-    //stars: 92,
-  },
   {
     id: "ragenius",
     title: "RAGenius",
     description: {
-      en: "Advanced Retrieval-Augmented Generation system for personal or enterprise knowledge management with real-time context understanding and generation.",
-      zh: "先进的检索增强生成系统，用于个人或企业知识管理，具有实时上下文理解与生成能力。",
+      en: "A production-ready knowledge system with a six-stage RAG pipeline, parallel retrieval, TTL model caching, SSE streaming, and containerized deployment. Retrieval recall improved by about 40% and first-token latency fell by about 60%.",
+      zh: "生产级智能知识库系统：设计六阶段 RAG Pipeline、并行检索、TTL 模型缓存、SSE 流式问答与容器化部署，检索 Recall 提升约 40%，用户首字响应延迟降低约 60%。",
     },
     thumbnail: "/projects/ragenius.webp",
-    gradient: "from-neon-pink to-neon-rose",
-    techStack: ["React", "LangChain", "Chroma DB", "FastAPI"],
-    language: "TypeScript",
-    categories: ["ai", "fullstack"], // AI + 全栈
+    techStack: ["Python", "React", "LangChain", "ChromaDB", "Docker", "Nginx"],
+    language: "Python / TypeScript",
+    categories: ["ai", "fullstack"],
+    metrics: ["+40% Recall", "−60% TTFT", "300+ Clones"],
     githubUrl: "https://github.com/l1anch1/ragenius",
-    demoUrl: "https://ragenius.xyz",
+    demoUrl: "https://www.ragenius.xyz/",
     featured: true,
-    //stars: 64,
-    //forks: 12,
   },
   {
     id: "repohealth",
     title: "RepoHealth",
     description: {
-      en: "A data-driven GitHub ecosystem analysis system that leverages machine learning and deep learning to analyze repository health metrics and predict lifespan.",
-      zh: "基于数据驱动的GitHub生态系统分析系统，通过机器学习和深度学习技术分析约9.6万条仓库的健康度指标并预测项目寿命，为开源项目可持续性和生态系统动态提供数据洞察。",
+      en: "An open-source repository health and lifespan prediction system built on more than 100,000 GitHub repositories. A hybrid deep-learning model reached R² 0.95+ and won a national third prize in the CCF Open Source Innovation Competition.",
+      zh: "基于十万余个 GitHub 仓库的开源健康度量与生命周期预测系统；混合深度学习架构在测试集达到 R² 0.95+，获 CCF 开源创新大赛国家级三等奖。",
     },
     thumbnail: "/projects/repohealth.webp",
-    gradient: "from-neon-emerald to-neon-teal",
-    techStack: ["Juyter", "transformers", "PyTorch", "scikit-learn", "seaborn"],
+    techStack: ["PyTorch", "Transformers", "Cox PH", "Scikit-learn", "Genetic Algorithm"],
     language: "Python",
-    categories: ["ai", "research"], // AI + 研究
+    categories: ["ai", "research"],
+    metrics: ["100K+ Repos", "R² 0.95+", "National 3rd Prize"],
     githubUrl: "https://github.com/l1anch1/Repo-Health",
     featured: true,
-    //stars: 64,
-    //forks: 12,
+  },
+  {
+    id: "tutorcraftease",
+    title: "TutorCraftEase",
+    description: {
+      en: "An LLM-assisted pedagogical question authoring system. The research combines adaptive generation with a knowledge graph and automated diagnosis across more than 100 concepts; published at ACM CHI 2025.",
+      zh: "大模型辅助教学题目生成系统，结合自适应生成、知识图谱与错误归因，覆盖 100+ 知识点；研究成果发表于 ACM CHI 2025。",
+    },
+    thumbnail: "/projects/tutorcraftease.webp",
+    techStack: ["LLM", "Neo4j", "Knowledge Graph", "HCI", "Experiment Design"],
+    language: "HCI / LLM",
+    categories: ["research", "ai"],
+    metrics: ["ACM CHI 2025", "100+ Concepts"],
+    academicUrl: "https://doi.org/10.1145/3706598.3713731",
+    featured: true,
+  },
+  {
+    id: "ux-ray",
+    title: "UX-Ray",
+    description: {
+      en: "A web UI inspection tool that uses multimodal LLM analysis to identify usability issues and turn them into actionable recommendations, with an interactive public demo.",
+      zh: "基于多模态大模型分析的 Web UI 审查工具，自动识别可用性问题并生成可执行的改进建议，提供在线交互 Demo。",
+    },
+    thumbnail: "/projects/ux-ray.webp",
+    techStack: ["Next.js", "TypeScript", "Gemini API", "Prompt Engineering"],
+    language: "TypeScript",
+    categories: ["ai", "fullstack"],
+    metrics: ["Live Demo", "Multimodal LLM"],
+    githubUrl: "https://github.com/l1anch1/ux-ray",
+    demoUrl: "https://ux-ray-ai.vercel.app",
   },
   {
     id: "vibeposter",
     title: "VibePoster",
     description: {
-      en: "An LLM-based multimodal editable poster generator using multi-agent workflows (Planner, Visual, Layout, Critic) with a dynamic OOP layout engine and RAG-powered knowledge base.",
-      zh: "基于大模型的多模态可编辑海报生成器，采用多智能体工作流（规划、视觉、布局、评审），集成动态 OOP 布局引擎和 RAG 驱动的知识库。",
+      en: "An editable multimodal poster generator that coordinates Planner, Visual, Layout, and Critic agents with a dynamic object-oriented layout engine and a RAG knowledge base.",
+      zh: "多模态可编辑海报生成器，通过 Planner、Visual、Layout 与 Critic 多智能体协作，结合动态 OOP 布局引擎和 RAG 知识库。",
     },
     thumbnail: "/projects/vibeposter.webp",
-    gradient: "from-neon-rose to-neon-purple",
-    techStack: ["FastAPI", "React", "Pydantic V2", "LangGraph", "RAG", "Knowledge Graph"],
-    language: "Python",
+    techStack: ["FastAPI", "React", "LangGraph", "Pydantic V2", "RAG", "Knowledge Graph"],
+    language: "Python / TypeScript",
     categories: ["ai", "fullstack"],
+    metrics: ["4-Agent Workflow", "Editable Output"],
     githubUrl: "https://github.com/l1anch1/VibePoster",
-    featured: true,
   },
   {
     id: "asl-recognition",
-    title: "ASL-Recognition",
+    title: "ASL Recognition",
     description: {
-      en: "A multi-dimensional comparative evaluation framework for American Sign Language (ASL) alphabet recognition, benchmarking CNN, Liquid NN, and ViT architectures across accuracy, noise robustness, and feature representation interpretability.",
-      zh: "一个多维度的比较评估框架，用于美国手语（ASL）字母识别，在准确率、噪声鲁棒性和特征表示可解释性方面对比CNN、Liquid NN和ViT架构。",
+      en: "A comparative evaluation framework for American Sign Language alphabet recognition across CNN, Liquid Neural Network, and Vision Transformer architectures, including robustness and interpretability analysis.",
+      zh: "美国手语字母识别对比评测框架，从准确率、噪声鲁棒性与可解释性等维度比较 CNN、Liquid Neural Network 与 Vision Transformer。",
     },
     thumbnail: "/projects/asl-recognition.webp",
-    gradient: "from-neon-orange to-neon-amber",
-    techStack: [ "PyTorch", "OpenCV", "TorchDyn", "scikit-learn", "seaborn"],
+    techStack: ["PyTorch", "OpenCV", "TorchDyn", "Scikit-learn", "Seaborn"],
     language: "Python",
-    categories: ["ai", "research"], // AI + 研究
+    categories: ["ai", "research"],
+    metrics: ["CNN vs LNN vs ViT"],
     githubUrl: "https://github.com/l1anch1/ASL-Recognition",
-    featured: true,
-    //stars: 64,
-    //forks: 12,
   },
 ];
 
-// Filter key mapping for translations
 const filterKeyMap: Record<Category, string> = {
   all: "filterAll",
   ai: "filterAI",
@@ -179,407 +124,248 @@ const filterKeyMap: Record<Category, string> = {
   fullstack: "filterFullStack",
 };
 
-// Category config
-const categories: { key: Category; icon: React.ElementType; gradient: string }[] = [
-  { key: "all", icon: Sparkles, gradient: "from-white/20 to-white/10" },
-  { key: "ai", icon: Brain, gradient: "from-neon-purple to-neon-pink" },
-  { key: "research", icon: FlaskConical, gradient: "from-neon-cyan to-neon-teal" },
-  { key: "fullstack", icon: Globe, gradient: "from-neon-indigo to-neon-violet" },
-];
-
-// Category icons for cards
-const categoryIcons: Record<Exclude<Category, "all">, React.ElementType> = {
-  research: FlaskConical,
-  ai: Brain,
-  fullstack: Globe,
-};
-
-// Categories that can be selected (excluding "all")
-type SelectableCategory = Exclude<Category, "all">;
+const categories: Category[] = ["all", "ai", "research", "fullstack"];
+const ease = [0.2, 0.7, 0.2, 1] as const;
 
 export default function ProjectsPage() {
   const { language, t } = useLanguage();
   const [selectedCategories, setSelectedCategories] = useState<Set<SelectableCategory>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Toggle category selection
   const toggleCategory = (category: Category) => {
     if (category === "all") {
-      // "All" clears all selections (shows everything)
       setSelectedCategories(new Set());
-    } else {
-      setSelectedCategories((prev) => {
-        const newSet = new Set(prev);
-        if (newSet.has(category)) {
-          newSet.delete(category);
-        } else {
-          newSet.add(category);
-        }
-        return newSet;
-      });
+      return;
     }
-  };
 
-  // Check if a category is active
-  const isCategoryActive = (category: Category) => {
-    if (category === "all") {
-      return selectedCategories.size === 0;
-    }
-    return selectedCategories.has(category);
-  };
-
-  // Filter projects
-  const filteredProjects = useMemo(() => {
-    return allProjects.filter((project) => {
-      // If categories selected, check if project has any matching category
-      if (selectedCategories.size > 0) {
-        const hasMatchingCategory = project.categories.some(cat => selectedCategories.has(cat));
-        if (!hasMatchingCategory) return false;
-      }
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase();
-        return (
-          project.title.toLowerCase().includes(query) ||
-          project.techStack.some((tech) => tech.toLowerCase().includes(query)) ||
-          project.language.toLowerCase().includes(query)
-        );
-      }
-      return true;
+    setSelectedCategories((previous) => {
+      const next = new Set(previous);
+      if (next.has(category)) next.delete(category);
+      else next.add(category);
+      return next;
     });
-  }, [selectedCategories, searchQuery]);
+  };
+
+  const isCategoryActive = (category: Category) =>
+    category === "all" ? selectedCategories.size === 0 : selectedCategories.has(category);
+
+  const filteredProjects = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    return allProjects.filter((project) => {
+      const matchesCategory =
+        selectedCategories.size === 0 || project.categories.some((category) => selectedCategories.has(category));
+      if (!matchesCategory) return false;
+      if (!query) return true;
+      return (
+        project.title.toLowerCase().includes(query) ||
+        project.techStack.some((technology) => technology.toLowerCase().includes(query)) ||
+        project.language.toLowerCase().includes(query) ||
+        project.description[language].toLowerCase().includes(query)
+      );
+    });
+  }, [language, searchQuery, selectedCategories]);
 
   return (
     <>
-      <GlassNavbar />
+      <SiteNav />
 
-      <main className="relative min-h-screen pt-28 pb-16 px-4 sm:px-6 flex flex-col items-center">
-        {/* Header Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-center mb-8 sm:mb-12 max-w-3xl"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-white/10 backdrop-blur-xl rounded-full border border-white/20"
+      <main className="mx-auto max-w-[1080px] px-6 pb-20 sm:px-10">
+        <section className="pb-12 pt-10">
+          <motion.span
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease, delay: 0.08 }}
+            className="u-label text-clay"
           >
-            <Terminal className="w-4 h-4 text-neon-cyan" />
-            <span className="text-white/80 text-sm font-mono">{t("allProjects")}</span>
-          </motion.div>
-
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
-            <span className="bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink bg-clip-text text-transparent">
-              {t("projectsTitle")}
-            </span>
-          </h1>
-
-          <p className="text-base sm:text-lg text-white/60 font-light max-w-2xl mx-auto">
+            {t("allProjects")}
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease, delay: 0.14 }}
+            className="mt-3 font-serif text-[52px] font-semibold leading-[1] tracking-[-0.02em] text-ink sm:text-[68px]"
+          >
+            {t("projectsTitle")}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease, delay: 0.2 }}
+            className="mt-5 max-w-[70ch] text-[17px] leading-relaxed text-ink-soft"
+          >
             {t("projectsSubtitle")}
-          </p>
-        </motion.div>
+          </motion.p>
+        </section>
 
-        {/* Filter Bar & Search */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="w-full max-w-6xl mb-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.28 }}
+          className="flex flex-col gap-5 border-t-[3px] border-ink pt-5 sm:flex-row sm:items-center sm:justify-between"
         >
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-            {/* Category Filters - Multi-select */}
-            <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-              {categories.map((cat) => {
-                const Icon = cat.icon;
-                const isActive = isCategoryActive(cat.key);
-                const showCheck = cat.key !== "all" && isActive;
-                return (
-                  <motion.button
-                    key={cat.key}
-                    onClick={() => toggleCategory(cat.key)}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`
-                      flex items-center gap-2
-                      px-4 py-2
-                      rounded-xl
-                      text-sm font-medium
-                      transition-all duration-300
-                      ${isActive
-                        ? `bg-gradient-to-r ${cat.gradient} text-white shadow-lg`
-                        : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10"
-                      }
-                    `}
-                  >
-                    {showCheck ? (
-                      <Check className="w-4 h-4" />
-                    ) : (
-                      <Icon className="w-4 h-4" />
-                    )}
-                    <span>{t(filterKeyMap[cat.key])}</span>
-                  </motion.button>
-                );
-              })}
-            </div>
-
-            {/* Search Bar */}
-            <div className="relative w-full sm:w-72">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={t("searchProjects")}
-                className="
-                  w-full
-                  pl-10 pr-4 py-2.5
-                  bg-white/5 backdrop-blur-xl
-                  border border-white/10
-                  rounded-xl
-                  text-white text-sm font-mono
-                  placeholder:text-white/30
-                  focus:outline-none focus:border-neon-cyan/50
-                  transition-colors
-                "
-              />
-            </div>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => {
+              const active = isCategoryActive(category);
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => toggleCategory(category)}
+                  className={`border-2 px-3.5 py-2 font-mono text-[12px] uppercase tracking-[0.06em] transition-colors ${
+                    active ? "border-green bg-green text-paper" : "border-rule text-ink hover:border-ink"
+                  }`}
+                >
+                  {active && category !== "all" ? "✓ " : ""}
+                  {t(filterKeyMap[category])}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Results count */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mt-4 text-white/40 text-sm font-mono"
-          >
-            {filteredProjects.length} {t("projectCount")}
-          </motion.div>
+          <label className="relative w-full sm:w-72">
+            <span className="sr-only">{t("searchProjects")}</span>
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder={t("searchProjects")}
+              className="w-full border-b-2 border-rule bg-transparent py-2.5 font-mono text-[13px] text-ink placeholder:text-faint focus:border-green focus:outline-none"
+            />
+          </label>
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="w-full max-w-7xl">
+        <div className="mt-4 font-mono text-[12px] text-faint">
+          {filteredProjects.length} {t("projectCount")}
+        </div>
+
+        <div className="mt-4">
           <AnimatePresence mode="wait">
             {filteredProjects.length > 0 ? (
               <motion.div
-                key={`${Array.from(selectedCategories).join("-")}-${searchQuery}`}
+                key={`${Array.from(selectedCategories).join("-")}-${searchQuery}-${language}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+                transition={{ duration: 0.22 }}
               >
                 {filteredProjects.map((project, index) => (
-                  <CompactProjectCard
-                    key={project.id}
-                    project={project}
-                    language={language}
-                    delay={0.1 * index}
-                  />
+                  <ProjectRow key={project.id} project={project} language={language} index={index} t={t} />
                 ))}
               </motion.div>
             ) : (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-center py-16"
+                className="border-y border-rule py-20 text-center font-mono text-[14px] text-faint"
               >
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/5 flex items-center justify-center">
-                  <Search className="w-8 h-8 text-white/30" />
-                </div>
-                <p className="text-white/50 text-lg">{t("noResults")}</p>
+                {t("noResults")}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
-
-        {/* Floating decorative elements */}
-        <FloatingElements />
       </main>
+
+      <SiteFooter />
     </>
   );
 }
 
-interface CompactProjectCardProps {
+function ProjectRow({
+  project,
+  language,
+  index,
+  t,
+}: {
   project: Project;
   language: "en" | "zh";
-  delay: number;
-}
-
-function CompactProjectCard({ project, language, delay }: CompactProjectCardProps) {
-  // 使用第一个分类的图标
-  const CategoryIcon = categoryIcons[project.categories[0]];
-  const { loaded, onLoad } = useImageLoaded();
+  index: number;
+  t: (key: string) => string;
+}) {
+  const primaryUrl = project.demoUrl || project.githubUrl || project.academicUrl;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
+    <motion.article
+      initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.4,
-        delay,
-        ease: "easeOut",
-      }}
-      className="group relative"
+      transition={{ duration: 0.42, ease, delay: index * 0.05 }}
+      className="group grid grid-cols-1 gap-x-8 gap-y-5 border-b border-rule py-9 md:grid-cols-[300px_minmax(0,1fr)]"
     >
-      <div
-        className="
-          h-full
-          bg-white/5 backdrop-blur-xl
-          border border-white/10
-          rounded-2xl
-          overflow-hidden
-          transition-all duration-300
-          hover:bg-white/10
-          hover:border-white/20
-          hover:shadow-lg hover:shadow-neon-purple/10
-        "
+      <a
+        href={primaryUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${project.title} ${language === "zh" ? "项目链接" : "project link"}`}
+        className="relative block aspect-[16/10] overflow-hidden border border-rule bg-paper-deep"
       >
-        {/* Thumbnail - 6:4 ratio with content */}
-        <div className={`relative h-52 sm:h-56 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
-          {/* Skeleton loader */}
-          {project.thumbnail && !loaded && (
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5">
-              <div className="absolute inset-0 skeleton-shimmer" />
-            </div>
-          )}
-          
-          {/* Image thumbnail with lazy loading */}
-          {project.thumbnail && (
-            <img
-              src={project.thumbnail}
-              alt={project.title}
-              loading="lazy"
-              decoding="async"
-              onLoad={onLoad}
-              className={`
-                absolute inset-0 w-full h-full object-cover
-                transition-opacity duration-500 ease-out
-                ${loaded ? 'opacity-100' : 'opacity-0'}
-              `}
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = 'none';
-              }}
-            />
-          )}
+        <span className="absolute left-3 top-2.5 z-10 font-mono text-[11px] tracking-[0.08em] text-paper mix-blend-difference">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <Image
+          src={project.thumbnail}
+          alt=""
+          fill
+          priority={index === 0}
+          sizes="(min-width: 768px) 300px, 100vw"
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover grayscale-[0.3] transition-all duration-500 ease-out group-hover:scale-[1.02] group-hover:grayscale-0"
+        />
+      </a>
 
-          {/* Category icon */}
-          <div className="absolute bottom-3 right-3 z-10">
-            <div className="w-8 h-8 rounded-xl bg-black/30 backdrop-blur-md flex items-center justify-center">
-              <CategoryIcon className="w-4 h-4 text-white/70" />
-            </div>
-          </div>
+      <div className="flex min-w-0 flex-col">
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+          <h2 className="font-serif text-[32px] font-semibold leading-none tracking-[-0.01em] text-ink transition-colors group-hover:text-green sm:text-[36px]">
+            {project.title}
+          </h2>
+          {project.featured && <span className="text-[16px] text-clay">★</span>}
+          <span className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.07em] text-faint">
+            {project.categories.map((category) => (
+              <span key={category}>{t(filterKeyMap[category])}</span>
+            ))}
+            <span className="text-green">{project.language}</span>
+          </span>
         </div>
 
-        {/* Content */}
-        <div className="p-5">
-          {/* Title & Language */}
-          <div className="mb-2">
-            <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
-              {project.title}
-            </h3>
+        <p className="mt-3 max-w-[68ch] text-[15px] leading-relaxed text-ink-soft">{project.description[language]}</p>
+
+        {project.metrics && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {project.metrics.map((metric) => (
+              <span key={metric} className="border border-clay/40 bg-clay/5 px-2 py-1 font-mono text-[11px] text-clay">
+                {metric}
+              </span>
+            ))}
           </div>
+        )}
 
-          {/* Description */}
-          <p className="text-white/60 text-sm sm:text-base leading-relaxed mb-4 line-clamp-2">
-            {project.description[language]}
-          </p>
-
-          {/* Tech Stack & Links */}
-          <div className="flex items-start justify-between pt-3 border-t border-white/10 gap-3">
-            {/* Tech Stack */}
-            <div className="flex flex-wrap gap-1 flex-1">
-              {project.techStack.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-2 py-0.5 bg-white/5 border border-white/10 rounded text-xs font-mono text-neon-cyan/80"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-
-            {/* Links */}
-            <div className="flex items-center gap-2 flex-shrink-0">
-              {project.githubUrl && (
-                <motion.a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="
-                    p-2 rounded-xl
-                    bg-white/10 border border-white/20
-                    text-white/80 hover:text-white
-                    hover:bg-white/20 hover:border-white/30
-                    shadow-sm hover:shadow-md hover:shadow-white/5
-                    transition-all duration-200
-                  "
-                  title="Source Code"
-                >
-                  <Github className="w-4.5 h-4.5" />
-                </motion.a>
-              )}
-              {project.academicUrl && (
-                <motion.a
-                  href={project.academicUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="
-                    p-2 rounded-xl
-                    bg-white/10 border border-white/20
-                    text-white/80 hover:text-white
-                    hover:bg-white/20 hover:border-white/30
-                    shadow-sm hover:shadow-md hover:shadow-white/5
-                    transition-all duration-200
-                  "
-                  title="Academic Paper"
-                >
-                  <GraduationCap className="w-4.5 h-4.5" />
-                </motion.a>
-              )}
-              {project.demoUrl && (
-                <motion.a
-                  href={project.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="
-                    relative overflow-hidden
-                    flex items-center gap-1.5
-                    px-3 py-1.5 rounded-xl
-                    bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink
-                    text-white text-xs font-semibold
-                    shadow-lg shadow-neon-purple/30
-                    hover:shadow-xl hover:shadow-neon-cyan/40
-                    transition-all duration-300
-                    before:absolute before:inset-0
-                    before:bg-gradient-to-r before:from-white/20 before:to-transparent
-                    before:opacity-0 before:hover:opacity-100
-                    before:transition-opacity
-                  "
-                >
-                  <span>Try it Now</span>
-                </motion.a>
-              )}
-            </div>
-          </div>
+        <div className="mt-auto flex flex-wrap items-end justify-between gap-x-6 gap-y-4 pt-5">
+          <span className="max-w-[520px] font-mono text-[11px] leading-relaxed text-faint">
+            {project.techStack.join(" · ")}
+          </span>
+          <span className="flex flex-wrap gap-4">
+            {project.githubUrl && <ProjectLink href={project.githubUrl} label={t("viewSource")} />}
+            {project.academicUrl && <ProjectLink href={project.academicUrl} label="Paper" />}
+            {project.demoUrl && <ProjectLink href={project.demoUrl} label={t("viewDemo")} accent />}
+          </span>
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
 
-function FloatingElements() {
+function ProjectLink({ href, label, accent = false }: { href: string; label: string; accent?: boolean }) {
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-[-1]">
-      <div className="absolute top-[20%] left-[5%] w-12 sm:w-16 h-12 sm:h-16 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 rotate-12" />
-      <div className="absolute top-[30%] right-[8%] w-16 sm:w-20 h-16 sm:h-20 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 -rotate-6" />
-      <div className="absolute bottom-[25%] left-[3%] w-20 sm:w-24 h-20 sm:h-24 bg-white/5 backdrop-blur-xl rounded-[28px] border border-white/10 rotate-45" />
-    </div>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`font-mono text-[11px] uppercase tracking-[0.07em] underline underline-offset-4 transition-colors ${
+        accent
+          ? "text-clay decoration-clay/40 hover:decoration-clay"
+          : "text-ink decoration-rule hover:text-green hover:decoration-green"
+      }`}
+    >
+      {label} ↗
+    </a>
   );
 }

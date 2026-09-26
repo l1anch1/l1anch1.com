@@ -1,155 +1,48 @@
-# Li Anchi Portfolio
+# Anchi Li — AI & Software Engineering Portfolio
 
-A stunning portfolio website with **iOS / VisionOS Liquid Glass** aesthetic, featuring glassmorphism effects, animated mesh gradient backgrounds, and bilingual support.
+Personal portfolio for [Anchi Li](https://l1anch1.com), focused on AI engineering, software engineering, LLM systems, and applied research.
 
-![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8?style=flat-square&logo=tailwindcss)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-11-ff69b4?style=flat-square&logo=framer)
+## Highlights
 
-## ✨ Features
+- Bilingual English / Chinese experience
+- Recruiter-oriented project and experience summaries
+- Selected engineering metrics and research publications
+- Responsive editorial design inspired by risograph printing
+- Static export for fast, low-maintenance hosting
 
-### 🎨 Design System
-- **Liquid Glass Aesthetic** — Inspired by iOS and VisionOS spatial computing design
-- **Glassmorphism Components** — Translucent cards with heavy backdrop blur and light-edge borders
-- **Animated Mesh Gradient** — Slowly morphing aurora background with vibrant neon colors
-- **Noise Texture Overlay** — Subtle grain for premium feel
+## Stack
 
-### 🧩 Components
-- `GlassCard` — Reusable glass container with 3 intensity levels (subtle, medium, strong)
-- `GlassNavbar` — Floating navigation bar with glass material
-- `BentoGrid` — CSS Grid layout for modern portfolio presentation
-- `MeshGradientBackground` — Animated blob background with Framer Motion
+- Next.js 14 with the App Router
+- TypeScript and React
+- Tailwind CSS
+- Framer Motion
+- EmailJS for the contact form
 
-### 🌍 Internationalization
-- **Bilingual Support** — English / 中文 toggle
-- **Context-based** — Language state managed via React Context
-
-### 📱 Responsive
-- Mobile-first design
-- Adaptive typography and spacing
-- Collapsible navigation items on smaller screens
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 18+ 
-- npm / yarn / pnpm
-
-### Installation
+## Local development
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/l1anch1.com.git
-cd l1anch1.com
-
-# Install dependencies
-npm install
-
-# Start development server
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+Open [http://localhost:3000](http://localhost:3000).
 
-### Build for Production
+## Quality checks
 
 ```bash
-# Build static export
+npm run lint
 npm run build
-
-# Preview production build
-npx serve out
 ```
 
-## 📁 Project Structure
+The production build is exported as static files in `out/`.
 
-```
-src/
-├── app/
-│   ├── globals.css      # Global styles, glass utilities, noise overlay
-│   ├── layout.tsx       # Root layout with font & providers
-│   └── page.tsx         # Main portfolio page
-├── components/
-│   ├── MeshGradientBackground.tsx   # Animated aurora background
-│   └── ui/
-│       ├── GlassCard.tsx            # Glass container component
-│       ├── GlassNavbar.tsx          # Navigation bar
-│       └── BentoGrid.tsx            # Grid layout system
-└── contexts/
-    └── LanguageContext.tsx          # i18n state management
-```
+## Deployment
 
-## 🎨 Customization
+Pushing to `main` triggers `.github/workflows/deploy.yml`:
 
-### Color Palette
+1. Install dependencies with `npm ci` on Node.js 20.
+2. Run the static Next.js build.
+3. Upload the generated `out/` directory.
+4. Deploy the artifact to GitHub Pages.
 
-Edit `tailwind.config.ts` to customize the neon color palette:
-
-```typescript
-colors: {
-  neon: {
-    purple: "#a855f7",
-    cyan: "#22d3ee",
-    pink: "#ec4899",
-    // ... add more
-  }
-}
-```
-
-### Glass Intensity
-
-The `GlassCard` component supports three intensity levels:
-
-```tsx
-<GlassCard intensity="subtle">...</GlassCard>   // bg-white/5
-<GlassCard intensity="medium">...</GlassCard>   // bg-white/10
-<GlassCard intensity="strong">...</GlassCard>   // bg-white/15
-```
-
-### Translations
-
-Add or modify translations in `src/contexts/LanguageContext.tsx`:
-
-```typescript
-const translations = {
-  en: { greeting: "Hello" },
-  zh: { greeting: "你好" },
-};
-```
-
-## 🌐 Deployment
-
-### GitHub Pages
-
-This project is configured for GitHub Pages deployment:
-
-1. Push to `main` branch
-2. GitHub Actions automatically builds and deploys
-3. Site available at `https://yourusername.github.io/repo-name/`
-
-> **Note:** If deploying to a subdirectory, uncomment `basePath` in `next.config.mjs`
-
-### Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/l1anch1.com)
-
-## 🛠 Tech Stack
-
-| Technology | Purpose |
-|------------|---------|
-| [Next.js 14](https://nextjs.org/) | React framework with App Router |
-| [TypeScript](https://www.typescriptlang.org/) | Type safety |
-| [Tailwind CSS](https://tailwindcss.com/) | Utility-first styling |
-| [Framer Motion](https://www.framer.com/motion/) | Animations |
-| [Lucide React](https://lucide.dev/) | Icon library |
-
-## 📄 License
-
-MIT © Li Anchi
-
----
-
-<p align="center">
-  <sub>Built with 💜 and lots of <code>backdrop-blur</code></sub>
-</p>
+The GitHub Pages deployment serves the custom domain [l1anch1.com](https://l1anch1.com).

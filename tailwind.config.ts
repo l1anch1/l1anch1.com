@@ -9,96 +9,47 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Vibrant neon palette for the liquid glass aesthetic
-        neon: {
-          purple: "#a855f7",
-          violet: "#8b5cf6",
-          fuchsia: "#d946ef",
-          pink: "#ec4899",
-          rose: "#f43f5e",
-          cyan: "#22d3ee",
-          teal: "#2dd4bf",
-          emerald: "#34d399",
-          blue: "#3b82f6",
-          indigo: "#6366f1",
+        // Riso / risograph-inspired warm ink palette
+        paper: {
+          DEFAULT: "#ECE7D8", // warm ivory base
+          soft: "#F1ECDE",
+          deep: "#E4DECC",
         },
-        // Deep dark backgrounds
-        dark: {
-          900: "#030014",
-          800: "#070318",
-          700: "#0d0628",
+        ink: {
+          DEFAULT: "#22241C", // near-black warm
+          soft: "#3C3E34",
         },
+        green: {
+          DEFAULT: "#3E5234", // dominant moss/pine ink
+          deep: "#2F3D27",
+          2: "#566B45",
+        },
+        clay: "#A4502B", // sharp secondary ink
+        faint: "#9A9784", // muted metadata
+        rule: "#CFC9B6", // hairline rules
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        // Distinctive type — deliberately avoids Inter/system defaults
+        sans: ["var(--font-bricolage)", "var(--font-noto-sans-sc)", "system-ui", "sans-serif"],
+        serif: ["var(--font-fraunces)", "var(--font-noto-serif-sc)", "Georgia", "serif"],
+        mono: ["var(--font-spline-mono)", "var(--font-noto-sans-sc)", "ui-monospace", "monospace"],
+      },
+      letterSpacing: {
+        label: "0.16em",
       },
       animation: {
-        "blob-1": "blob-1 25s ease-in-out infinite",
-        "blob-2": "blob-2 30s ease-in-out infinite",
-        "blob-3": "blob-3 35s ease-in-out infinite",
-        "blob-4": "blob-4 28s ease-in-out infinite",
-        "pulse-slow": "pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        rise: "rise 0.85s cubic-bezier(0.2,0.7,0.2,1) forwards",
+        "swipe-x": "swipe-x 0.35s cubic-bezier(0.2,0.7,0.2,1) forwards",
       },
       keyframes: {
-        "blob-1": {
-          "0%, 100%": {
-            transform: "translate(0%, 0%) rotate(0deg) scale(1)",
-          },
-          "25%": {
-            transform: "translate(20%, 15%) rotate(90deg) scale(1.1)",
-          },
-          "50%": {
-            transform: "translate(-10%, 30%) rotate(180deg) scale(0.95)",
-          },
-          "75%": {
-            transform: "translate(-20%, 10%) rotate(270deg) scale(1.05)",
-          },
+        rise: {
+          from: { opacity: "0", transform: "translateY(18px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
         },
-        "blob-2": {
-          "0%, 100%": {
-            transform: "translate(0%, 0%) rotate(0deg) scale(1)",
-          },
-          "25%": {
-            transform: "translate(-15%, 25%) rotate(-90deg) scale(1.15)",
-          },
-          "50%": {
-            transform: "translate(25%, -10%) rotate(-180deg) scale(0.9)",
-          },
-          "75%": {
-            transform: "translate(10%, 20%) rotate(-270deg) scale(1.1)",
-          },
+        "swipe-x": {
+          from: { transform: "scaleX(0)" },
+          to: { transform: "scaleX(1)" },
         },
-        "blob-3": {
-          "0%, 100%": {
-            transform: "translate(0%, 0%) rotate(0deg) scale(1)",
-          },
-          "33%": {
-            transform: "translate(30%, -20%) rotate(120deg) scale(1.2)",
-          },
-          "66%": {
-            transform: "translate(-25%, 15%) rotate(240deg) scale(0.85)",
-          },
-        },
-        "blob-4": {
-          "0%, 100%": {
-            transform: "translate(0%, 0%) rotate(0deg) scale(1)",
-          },
-          "20%": {
-            transform: "translate(-30%, -15%) rotate(72deg) scale(1.1)",
-          },
-          "40%": {
-            transform: "translate(15%, 25%) rotate(144deg) scale(0.95)",
-          },
-          "60%": {
-            transform: "translate(25%, -25%) rotate(216deg) scale(1.15)",
-          },
-          "80%": {
-            transform: "translate(-15%, 10%) rotate(288deg) scale(0.9)",
-          },
-        },
-      },
-      backdropBlur: {
-        xs: "2px",
       },
     },
   },
