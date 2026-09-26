@@ -13,10 +13,10 @@ interface LanguageContextType {
 const translations: Record<Language, Record<string, string>> = {
   en: {
     // Navbar
-    backToAcademic: "Go to Academic Home",
+    backToAcademic: "Academic Profile",
     home: "Home",
     work: "Projects",
-    about: "About",
+    about: "Experience",
     contact: "Contact",
     
     // Hero
@@ -25,7 +25,7 @@ const translations: Record<Language, Record<string, string>> = {
     heroRole: "AI Engineer · Software Engineer",
     
     // Featured Works (Homepage)
-    featuredWorks: "Selected Engineering Work",
+    featuredWorks: "Selected Systems",
     featuredProject: "Featured",
     squintaxDesc: "An intelligent code analysis tool that helps developers understand complex codebases through AI-powered visualization and natural language explanations.",
     uxRayDesc: "A web UI inspection tool that automatically identifies usability issues and provides actionable solutions using computer vision and LLM analysis.",
@@ -41,7 +41,7 @@ const translations: Record<Language, Record<string, string>> = {
     githubProfile: "GitHub Profile",
     
     // Skills
-    researchInterests: "Research Interests",
+    researchInterests: "Engineering Focus",
     humanAI: "Human-Centered AI",
     llmApps: "LLM Applications",
     aiSE: "AI for Software Engineering",
@@ -52,11 +52,11 @@ const translations: Record<Language, Record<string, string>> = {
     getInTouch: "Get in Touch",
 
     // Projects Page
-    projectsTitle: "Engineering & Research",
-    projectsSubtitle: "Selected systems and studies across LLM applications, AI for software engineering, full-stack development, and machine learning.",
+    projectsTitle: "Systems & Projects",
+    projectsSubtitle: "Production-minded systems across LLM applications, AI for software engineering, full-stack development, and machine learning.",
     viewSource: "Source",
     viewDemo: "Demo",
-    allProjects: "Project Archive",
+    allProjects: "Engineering Portfolio",
     searchProjects: "Search projects...",
     noResults: "No projects found",
     projectCount: "projects",
@@ -64,17 +64,15 @@ const translations: Record<Language, Record<string, string>> = {
     // Filter categories
     filterAll: "All",
     filterAI: "AI/LLM",
-    filterResearch: "Research",
+    filterSystems: "Systems / Data",
     filterFullStack: "Full-Stack",
     filterExperiments: "Experiments",
 
     // About Page
     aboutTitle: "> whoami",
-    aboutBio1: "I'm a Computer Science graduate from Beijing University of Technology. My work sits at the intersection of LLM systems and software engineering: coding-agent evaluation, repository-level understanding, retrieval pipelines, and production full-stack applications.",
-    aboutBio2: "I worked with ByteDance Seed, the Institute of Software at the Chinese Academy of Sciences, and Concordia University's REALISE Lab. I have a CHI 2025 publication and received Fall 2026 master's offers from Carnegie Mellon University, UCLA, and other computer science programs.",
-    experienceLog: "Experience",
-    education: "Education",
-    publications: "Publications",
+    aboutBio1: "I build AI systems that can be evaluated, operated, and improved: coding-agent benchmarks, repository understanding pipelines, retrieval systems, and production full-stack applications.",
+    aboutBio2: "This site focuses on engineering work and implementation evidence. Publications, academic CV, research interests, and scholarly updates live on my academic profile.",
+    experienceLog: "Engineering Experience",
     techArsenal: "Technical Skills",
     frontend: "Frontend",
     backend: "Backend / Systems",
@@ -95,10 +93,10 @@ const translations: Record<Language, Record<string, string>> = {
   },
   zh: {
     // Navbar
-    backToAcademic: "前往学术主页",
+    backToAcademic: "学术主页",
     home: "首页",
     work: "项目",
-    about: "关于",
+    about: "经历",
     contact: "联系",
     
     // Hero
@@ -107,7 +105,7 @@ const translations: Record<Language, Record<string, string>> = {
     heroRole: "AI 工程师 · 软件工程师",
     
     // Featured Works (Homepage)
-    featuredWorks: "精选工程项目",
+    featuredWorks: "精选工程系统",
     featuredProject: "精选",
     squintaxDesc: "一个智能代码分析工具，通过 AI 驱动的可视化和自然语言解释，帮助开发者理解复杂的代码库。",
     uxRayDesc: "一个网页 UI 审查工具，通过计算机视觉和大模型分析自动识别可用性问题并提供可操作的解决方案。",
@@ -123,7 +121,7 @@ const translations: Record<Language, Record<string, string>> = {
     githubProfile: "GitHub 主页",
     
     // Skills
-    researchInterests: "研究方向",
+    researchInterests: "工程方向",
     humanAI: "以人为本的人工智能",
     llmApps: "大模型应用",
     aiSE: "智能化软件工程",
@@ -134,29 +132,27 @@ const translations: Record<Language, Record<string, string>> = {
     getInTouch: "取得联系",
 
     // Projects Page
-    projectsTitle: "工程与研究",
-    projectsSubtitle: "围绕大模型应用、智能化软件工程、全栈开发与机器学习的代表性系统和研究成果。",
+    projectsTitle: "工程系统与项目",
+    projectsSubtitle: "围绕大模型应用、智能化软件工程、全栈开发与机器学习构建的可运行系统。",
     viewSource: "源码",
     viewDemo: "演示",
-    allProjects: "项目档案",
+    allProjects: "工程作品集",
     searchProjects: "搜索项目...",
     noResults: "未找到项目",
     projectCount: "个项目",
     
     // Filter categories
     filterAll: "全部",
-    filterResearch: "研究",
+    filterSystems: "系统 / 数据",
     filterAI: "AI/LLM",
     filterFullStack: "全栈",
     filterExperiments: "实验",
 
     // About Page
     aboutTitle: "> whoami",
-    aboutBio1: "我本科毕业于北京工业大学计算机科学与技术专业，关注大模型系统与软件工程的交叉方向，包括 Coding Agent 评测、仓库级代码理解、检索增强生成与生产级全栈应用。",
-    aboutBio2: "我曾在字节跳动 Seed、中国科学院软件研究所与加拿大康考迪亚大学 REALISE 实验室从事工程和研究工作，合著 CHI 2025 论文，并已获得 CMU、UCLA 等校 2026 Fall 计算机相关硕士项目录取。",
-    experienceLog: "实习与研究经历",
-    education: "教育背景",
-    publications: "论文发表",
+    aboutBio1: "我专注于构建可评测、可运行、可持续优化的 AI 系统，包括 Coding Agent Benchmark、仓库级理解 Pipeline、检索系统与生产级全栈应用。",
+    aboutBio2: "本站只呈现工程经历与实现证据；论文、学术 CV、研究方向及学术动态统一放在学术主页。",
+    experienceLog: "工程经历",
     techArsenal: "个人技能",
     frontend: "前端",
     backend: "后端 / 系统",

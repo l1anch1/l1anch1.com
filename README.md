@@ -1,12 +1,14 @@
 # Anchi Li — AI & Software Engineering Portfolio
 
-Personal portfolio for [Anchi Li](https://l1anch1.com), focused on AI engineering, software engineering, LLM systems, and applied research.
+Personal portfolio for [Anchi Li](https://l1anch1.com), focused on AI engineering, software engineering, LLM systems, and production-minded implementation.
+
+The portfolio is intentionally separate from the [academic profile](https://l1anch1.github.io/): this site owns engineering experience, systems, demos, source code, and measurable outcomes; the academic profile owns publications, scholarly CV, research interests, and academic updates.
 
 ## Highlights
 
 - Bilingual English / Chinese experience
 - Recruiter-oriented project and experience summaries
-- Selected engineering metrics and research publications
+- Selected engineering metrics, source code, and live demos
 - Responsive editorial design inspired by risograph printing
 - Static export for fast, low-maintenance hosting
 

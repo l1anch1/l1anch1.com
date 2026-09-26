@@ -1,4 +1,5 @@
 const footerLinks = [
+  { label: "Academic", href: "https://l1anch1.github.io", external: true },
   { label: "GitHub", href: "https://github.com/l1anch1", external: true },
   { label: "Email", href: "mailto:l1anch1@outlook.com", external: false },
   {

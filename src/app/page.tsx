@@ -45,17 +45,17 @@ const featuredProjects: FeaturedProject[] = [
     linkLabel: { en: "View source", zh: "查看源码" },
   },
   {
-    id: "tutorcraftease",
-    title: "TutorCraftEase",
+    id: "ux-ray",
+    title: "UX-Ray",
     description: {
-      en: "An LLM-assisted pedagogical question authoring system with knowledge-graph-based gap diagnosis, published at ACM CHI 2025.",
-      zh: "大模型辅助教学题目生成系统，结合知识图谱进行薄弱点诊断，成果发表于 ACM CHI 2025。",
+      en: "A deployed web UI inspection tool that uses multimodal LLM analysis to identify usability issues and turn them into actionable recommendations.",
+      zh: "已部署的 Web UI 审查工具，利用多模态大模型识别可用性问题并生成可执行的改进建议。",
     },
-    metric: "CHI ’25",
-    metricLabel: { en: "peer-reviewed paper", zh: "同行评审论文" },
-    stack: "LLM · Knowledge Graph · HCI",
-    href: "https://doi.org/10.1145/3706598.3713731",
-    linkLabel: { en: "Read paper", zh: "查看论文" },
+    metric: "LIVE",
+    metricLabel: { en: "interactive demo", zh: "在线交互演示" },
+    stack: "Next.js · TypeScript · Gemini API",
+    href: "https://ux-ray-ai.vercel.app",
+    linkLabel: { en: "Open demo", zh: "打开演示" },
   },
 ];
 
@@ -83,8 +83,8 @@ const experience = [
     period: "2024.06 — 2025.07",
     role: { en: "Research Assistant", zh: "科研助理" },
     impact: {
-      en: "Developed LLM agents, instruction-tuning data, and dynamic knowledge graphs; co-authored CHI 2025 and ongoing CHI research.",
-      zh: "研发大模型智能体、指令微调数据与动态知识图谱，合著 CHI 2025 论文并持续开展 CHI 相关研究。",
+      en: "Engineered multi-turn conversation and memory for a low-code LLM agent platform, and improved Llama 3–8B instruction-following accuracy by 10% through LoRA fine-tuning.",
+      zh: "为低代码 LLM Agent 平台实现多轮对话与记忆，并通过 LoRA 微调使 Llama 3–8B 指令跟随准确率提升 10%。",
     },
   },
 ];
@@ -93,7 +93,7 @@ const proofPoints = [
   { value: "90%+", en: "Human–AI agreement", zh: "人机评分一致率" },
   { value: "100K+", en: "Repositories analyzed", zh: "分析代码仓库" },
   { value: "+40%", en: "Retrieval recall", zh: "检索召回提升" },
-  { value: "CHI ’25", en: "Published research", zh: "论文发表" },
+  { value: "−60%", en: "First-token latency", zh: "首字响应延迟" },
 ];
 
 const ease = [0.2, 0.7, 0.2, 1] as const;

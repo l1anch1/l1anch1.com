@@ -7,7 +7,7 @@ import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-type Category = "all" | "research" | "ai" | "fullstack";
+type Category = "all" | "systems" | "ai" | "fullstack";
 type SelectableCategory = Exclude<Category, "all">;
 
 interface Project {
@@ -20,7 +20,6 @@ interface Project {
   categories: SelectableCategory[];
   metrics?: string[];
   githubUrl?: string;
-  academicUrl?: string;
   demoUrl?: string;
   featured?: boolean;
 }
@@ -36,7 +35,7 @@ const allProjects: Project[] = [
     thumbnail: "/projects/ragenius.webp",
     techStack: ["Python", "React", "LangChain", "ChromaDB", "Docker", "Nginx"],
     language: "Python / TypeScript",
-    categories: ["ai", "fullstack"],
+    categories: ["ai", "fullstack", "systems"],
     metrics: ["+40% Recall", "−60% TTFT", "300+ Clones"],
     githubUrl: "https://github.com/l1anch1/ragenius",
     demoUrl: "https://www.ragenius.xyz/",
@@ -52,24 +51,9 @@ const allProjects: Project[] = [
     thumbnail: "/projects/repohealth.webp",
     techStack: ["PyTorch", "Transformers", "Cox PH", "Scikit-learn", "Genetic Algorithm"],
     language: "Python",
-    categories: ["ai", "research"],
+    categories: ["ai", "systems"],
     metrics: ["100K+ Repos", "R² 0.95+", "National 3rd Prize"],
     githubUrl: "https://github.com/l1anch1/Repo-Health",
-    featured: true,
-  },
-  {
-    id: "tutorcraftease",
-    title: "TutorCraftEase",
-    description: {
-      en: "An LLM-assisted pedagogical question authoring system. The research combines adaptive generation with a knowledge graph and automated diagnosis across more than 100 concepts; published at ACM CHI 2025.",
-      zh: "大模型辅助教学题目生成系统，结合自适应生成、知识图谱与错误归因，覆盖 100+ 知识点；研究成果发表于 ACM CHI 2025。",
-    },
-    thumbnail: "/projects/tutorcraftease.webp",
-    techStack: ["LLM", "Neo4j", "Knowledge Graph", "HCI", "Experiment Design"],
-    language: "HCI / LLM",
-    categories: ["research", "ai"],
-    metrics: ["ACM CHI 2025", "100+ Concepts"],
-    academicUrl: "https://doi.org/10.1145/3706598.3713731",
     featured: true,
   },
   {
@@ -111,7 +95,7 @@ const allProjects: Project[] = [
     thumbnail: "/projects/asl-recognition.webp",
     techStack: ["PyTorch", "OpenCV", "TorchDyn", "Scikit-learn", "Seaborn"],
     language: "Python",
-    categories: ["ai", "research"],
+    categories: ["ai", "systems"],
     metrics: ["CNN vs LNN vs ViT"],
     githubUrl: "https://github.com/l1anch1/ASL-Recognition",
   },
@@ -120,11 +104,11 @@ const allProjects: Project[] = [
 const filterKeyMap: Record<Category, string> = {
   all: "filterAll",
   ai: "filterAI",
-  research: "filterResearch",
+  systems: "filterSystems",
   fullstack: "filterFullStack",
 };
 
-const categories: Category[] = ["all", "ai", "research", "fullstack"];
+const categories: Category[] = ["all", "ai", "systems", "fullstack"];
 const ease = [0.2, 0.7, 0.2, 1] as const;
 
 export default function ProjectsPage() {
@@ -282,7 +266,7 @@ function ProjectRow({
   index: number;
   t: (key: string) => string;
 }) {
-  const primaryUrl = project.demoUrl || project.githubUrl || project.academicUrl;
+  const primaryUrl = project.demoUrl || project.githubUrl;
 
   return (
     <motion.article
@@ -307,7 +291,7 @@ function ProjectRow({
           fill
           priority={index === 0}
           sizes="(min-width: 768px) 300px, 100vw"
-          loading="lazy"
+          loading={index === 0 ? "eager" : "lazy"}
           className="absolute inset-0 h-full w-full object-cover grayscale-[0.3] transition-all duration-500 ease-out group-hover:scale-[1.02] group-hover:grayscale-0"
         />
       </a>
@@ -344,7 +328,6 @@ function ProjectRow({
           </span>
           <span className="flex flex-wrap gap-4">
             {project.githubUrl && <ProjectLink href={project.githubUrl} label={t("viewSource")} />}
-            {project.academicUrl && <ProjectLink href={project.academicUrl} label="Paper" />}
             {project.demoUrl && <ProjectLink href={project.demoUrl} label={t("viewDemo")} accent />}
           </span>
         </div>
